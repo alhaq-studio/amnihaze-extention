@@ -1,7 +1,7 @@
 {
-  "name": "amngaze-extension",
+  "name": "amnihaze-extension",
   "version": "0.1.9",
-  "description": "AmnGaze NFSW and Haram Content Blur",
+  "description": "AmniHaze (Amni Blur/Mask) — Real-time AI visual content moderation, smart image blurring, and screen masking",
   "main": "background.js",
   "scripts": {
     "build": "node scripts/build-all.js",

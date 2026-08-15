@@ -56,7 +56,7 @@ The original codebase had integration with **Polar.sh** (which is built on Strip
 
 ## 3. Deploy Your Own Backend API
 
-You need a lightweight backend API to bridge the extension, Google Sign-In, and Stripe/Polar. The current extension points to a Cloudflare Worker: `https://AmnGaze-api.md-alganzory.workers.dev`.
+You need a lightweight backend API to bridge the extension, Google Sign-In, and Stripe/Polar. The current extension points to a Cloudflare Worker: `https://amngaze-api.alhaq-studio.workers.dev`.
 
 ### What your backend needs to do:
 1. **Verify Google Sign-In Token**: 

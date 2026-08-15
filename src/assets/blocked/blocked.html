@@ -1,391 +1,442 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Site Blocked - AmnGaze</title>
     <style>
+        @font-face {
+            font-family: "Coolvetica";
+            src: url("../fonts/coolvetica.otf") format("opentype");
+            font-weight: 400 700;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: "Inter";
+            src: url("../fonts/inter.woff2") format("woff2");
+            font-weight: 100 900;
+            font-display: swap;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            font-family: system-ui, -apple-system, sans-serif;
+            font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            margin: 0;
-            background-color: #f5f7fa;
-            color: #2d3748;
+            background-color: #020617;
+            color: #f1f5f9;
+            padding: 24px;
+            overflow-x: hidden;
+        }
+
+        /* Subtle ambient glow */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(16, 185, 129, 0) 70%);
+            filter: blur(60px);
+            pointer-events: none;
+            z-index: 0;
         }
 
         .container {
-            max-width: 600px;
+            position: relative;
+            z-index: 1;
+            max-width: 520px;
+            width: 100%;
             text-align: center;
-            padding: 2rem;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 36px 32px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 28px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            animation: rise 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
         }
 
-        .logo {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 1rem;
+        .shield-icon-wrapper {
+            position: relative;
+            width: 76px;
+            height: 76px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 22px;
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #34d399;
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.2) inset, 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .shield-icon-wrapper svg {
+            width: 38px;
+            height: 38px;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 999px;
+            background: rgba(16, 185, 129, 0.14);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #34d399;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .status-pill .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #34d399;
+            box-shadow: 0 0 6px rgba(52, 211, 153, 0.8);
+            animation: pulse 2s infinite;
         }
 
         .title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            color: #2d3748;
+            font-family: "Coolvetica", sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 8px;
         }
 
         .description {
-            margin-bottom: 2rem;
-            color: #4a5568;
-            font-size: 0.875rem;
+            font-size: 14px;
+            color: #94a3b8;
+            line-height: 1.55;
+            margin-bottom: 20px;
+        }
+
+        .target-box {
+            background: rgba(2, 6, 23, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .target-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #64748b;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .target-url {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 14px;
+            font-weight: 600;
+            color: #34d399;
+            word-break: break-all;
+        }
+
+        .quote-box {
+            font-size: 13px;
+            font-style: italic;
+            color: #cbd5e1;
+            border-left: 2px solid rgba(52, 211, 153, 0.5);
+            padding-left: 14px;
+            text-align: left;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .actions-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
         }
 
         .button {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            border-radius: 4px;
-            background-color: #4299e1;
-            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: 999px;
+            background-color: #10b981;
+            color: #020617;
             text-decoration: none;
-            font-weight: 500;
-            transition: background-color 0.2s;
+            font-weight: 700;
+            font-size: 14px;
             border: none;
             cursor: pointer;
-            font-size: 0.875rem;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+            transition: all 0.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+            width: 100%;
         }
 
         .button:hover {
-            background-color: #3182ce;
+            background-color: #34d399;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+        }
+
+        .button:active {
+            transform: translateY(0);
         }
 
         .secondary-button {
-            background-color: transparent;
-            color: #718096;
-            font-size: 0.875rem;
-            margin-top: 1rem;
-            text-decoration: dotted underline;
-            border: none;
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 10px 20px;
+            border-radius: 999px;
             cursor: pointer;
-            font-size: 0.75rem;
+            transition: all 0.2s ease;
+            width: 100%;
         }
 
         .secondary-button:hover {
-            color: #4a5568;
+            background: rgba(51, 65, 85, 0.8);
+            color: #f1f5f9;
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
-        .tertiary-button {
+        /* Companion Reminder Card */
+        .reminder-card {
+            margin-top: 20px;
+            padding: 16px 18px;
+            border-radius: 18px;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            background: linear-gradient(180deg, rgba(69, 39, 16, 0.5) 0%, rgba(41, 23, 10, 0.5) 100%);
+            text-align: left;
+        }
+
+        .reminder-eyebrow {
             display: inline-block;
-            padding: 0.75rem 1.5rem;
-            border-radius: 4px;
-            background-color: #8c8c8c;
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: background-color 0.2s;
+            margin-bottom: 4px;
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #fbbf24;
+        }
+
+        .reminder-title {
+            margin: 0 0 6px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #fef3c7;
+        }
+
+        .reminder-description {
+            margin: 0;
+            font-size: 12.5px;
+            line-height: 1.5;
+            color: #fde68a;
+        }
+
+        .reminder-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .reminder-actions .button {
+            width: auto;
+            padding: 7px 16px;
+            font-size: 12px;
+            background: #f59e0b;
+            color: #000;
+        }
+
+        .reminder-actions .button:hover {
+            background: #fbbf24;
+        }
+
+        .reminder-dismiss {
+            width: auto;
+            background: transparent;
             border: none;
+            color: #fbbf24;
+            font-size: 12px;
+            padding: 6px 10px;
             cursor: pointer;
+            text-decoration: underline;
         }
 
-        .tertiary-button:disabled {
-            background-color: #dcdcdc;
-            color: #a0a0a0;
-            cursor: not-allowed;
-        }
-
+        /* Modal Overlay */
         .modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             align-items: center;
             justify-content: center;
+            z-index: 100;
+            padding: 20px;
         }
 
         .modal-content {
-            background: white;
-            padding: 3rem;
-            border-radius: 8px;
-            max-width: 500px;
-            /* width: 90%; */
-            /* text-align: left; */
+            background: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            padding: 28px 32px;
+            max-width: 480px;
+            width: 100%;
+            text-align: left;
+            animation: rise 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
         }
 
         .modal-title {
-            font-size: 1.25rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            color: #2d3748;
+            font-family: "Coolvetica", sans-serif;
+            font-size: 22px;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .modal-content p {
+            font-size: 13px;
+            color: #94a3b8;
+            line-height: 1.5;
+            margin-bottom: 12px;
         }
 
         #confirmation-text {
-            /* width: 100%; */
-            padding: 0.75rem;
-            margin: 1rem 0;
-            border: 1px solid #e2e8f0;
-            border-radius: 4px;
-            font-size: 0.875rem;
-            cursor: not-allowed;
+            padding: 12px 14px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            font-size: 12px;
+            color: #94a3b8;
+            background-color: rgba(2, 6, 23, 0.6);
             user-select: none;
-        }
-
-        #confirmation-text[readonly] {
-            background-color: #f7fafc;
-            color: #4a5568;
+            line-height: 1.5;
         }
 
         .input-text {
-            width: 95%;
-            padding: 0.75rem;
-            margin: 1rem 0;
-            border: 1px solid #e2e8f0;
-            border-radius: 4px;
-            font-size: 0.875rem;
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            background: #020617;
+            color: #f1f5f9;
+            font-size: 13px;
+            outline: none;
+            margin-bottom: 8px;
+        }
+
+        .input-text:focus {
+            border-color: #10b981;
         }
 
         .error-message {
-            color: #e53e3e;
-            font-size: 0.875rem;
-            margin-top: 0.5rem;
+            color: #ef4444;
+            font-size: 12px;
+            margin-bottom: 14px;
             display: none;
-            text-align: right;
         }
 
         .button-group {
             display: flex;
+            gap: 10px;
             justify-content: flex-end;
-            margin-top: 1rem;
-            gap: 1rem;
+            margin-top: 14px;
         }
 
-        .footer {
-            margin-top: 2rem;
-            text-align: center;
-            color: #718096;
-            font-size: 0.875rem;
+        .tertiary-button {
+            padding: 8px 18px;
+            border-radius: 999px;
+            background-color: #334155;
+            color: #f1f5f9;
+            font-size: 12.5px;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
 
-        .support-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 0.5rem;
-            scale: 0.8
+        .tertiary-button:not(:disabled):hover {
+            background-color: #ef4444;
+            border-color: #ef4444;
         }
 
-        .support-text {
-            font-size: 0.75rem;
-            opacity: 0.8;
-            margin-bottom: 0.5rem;
-        }
-
-        .support-button {
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 0.75rem;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            transition: transform 0.2s;
-            border: 1px solid #e2e8f0;
-            background: white;
-            color: #4a5568;
-        }
-
-        .support-button:hover {
-            transform: translateY(-1px);
-            background: #f7fafc;
-        }
-
-        .support-button img {
-            width: 16px;
-            height: 16px;
-        }
-
-        .social-links {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .social-link {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
-            color: #4a5568;
-            transition: transform 0.2s ease;
-            padding: 1rem;
-            border-radius: 8px;
-            min-width: 50px;
-        }
-
-        .social-link:hover {
-            transform: translateY(-3px);
-            background: #f7fafc;
-        }
-
-        .social-link img {
-            width: 24px;
-            height: 24px;
-        }
-
-        .social-link span {
-            font-size: 0.9rem;
-            font-weight: 500;
+        .tertiary-button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
         }
 
         .hidden {
             display: none !important;
         }
 
-        .reminder-card {
-            margin-top: 1.5rem;
-            padding: 1rem 1.1rem;
-            border-radius: 12px;
-            border: 1px solid #f6ad55;
-            background: linear-gradient(180deg, #fffaf0 0%, #fff7ed 100%);
-            text-align: left;
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .reminder-eyebrow {
-            display: inline-block;
-            margin-bottom: 0.5rem;
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: #c05621;
-        }
-
-        .reminder-title {
-            margin: 0 0 0.45rem;
-            font-size: 1rem;
-            font-weight: 700;
-            color: #7b341e;
-        }
-
-        .reminder-description {
-            margin: 0;
-            font-size: 0.875rem;
-            line-height: 1.55;
-            color: #7c5a2d;
-        }
-
-        .reminder-actions {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-            margin-top: 1rem;
-        }
-
-        .reminder-dismiss {
-            margin-top: 0;
-            padding: 0;
-            text-decoration: underline;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            body {
-                background-color: #111827;
-                color: #f8fafc;
-            }
-
-            .container,
-            .modal-content {
-                background: #1f2937;
-                box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
-            }
-
-            .title,
-            .modal-title {
-                color: #f8fafc;
-            }
-
-            .description,
-            .footer,
-            .support-text {
-                color: #cbd5e1;
-            }
-
-            .secondary-button {
-                color: #cbd5e1;
-            }
-
-            .secondary-button:hover {
-                color: #f8fafc;
-            }
-
-            .support-button,
-            .social-link {
-                background: #111827;
-                border-color: #374151;
-                color: #e5e7eb;
-            }
-
-            .support-button:hover,
-            .social-link:hover {
-                background: #0f172a;
-            }
-
-            #confirmation-text[readonly],
-            .input-text {
-                background-color: #111827;
-                border-color: #374151;
-                color: #e5e7eb;
-            }
-
-            .reminder-card {
-                border-color: #c2410c;
-                background: linear-gradient(180deg, #3a1d11 0%, #2b1810 100%);
-            }
-
-            .reminder-eyebrow {
-                color: #fdba74;
-            }
-
-            .reminder-title {
-                color: #ffedd5;
-            }
-
-            .reminder-description {
-                color: #fed7aa;
-            }
-
-            .reminder-dismiss {
-                color: #fdba74;
-            }
-
-            .reminder-dismiss:hover {
-                color: #ffedd5;
-            }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
         }
     </style>
 </head>
 
 <body style="visibility: hidden;">
     <div class="container">
-        <img src="../amngaze-icon-128.png" alt="AmnGaze Logo" class="logo">
-        <h1 class="title">Site Blocked by AmnGaze</h1>
-        <p class="description">This site has been blocked because it may contain inappropriate content.</p>
-        <div>
+        <div class="shield-icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" strokeLinejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+        </div>
+
+        <div class="status-pill">
+            <span class="dot"></span>
+            <span>AmnGaze Active Protection</span>
+        </div>
+
+        <h1 class="title">Access Restricted</h1>
+        <p class="description">This destination has been restricted to keep your browsing safe, halal, and distraction-free.</p>
+
+        <div class="target-box" id="target-box">
+            <span class="target-label">Restricted Target</span>
+            <span class="target-url" id="blocked-target-url">harmful-domain.com</span>
+        </div>
+
+        <blockquote class="quote-box">
+            "Take a mindful moment to step back and focus on what truly matters today."
+        </blockquote>
+
+        <div class="actions-group">
             <a href="#" class="button" id="go-back">Go Back to Safety</a>
-            <br>
             <button class="secondary-button" id="report-false-positive">This site shouldn't be blocked</button>
         </div>
+
         <div id="companion-reminder" class="reminder-card hidden">
             <span id="companion-reminder-eyebrow" class="reminder-eyebrow">
                 Extra Accountability
@@ -412,23 +463,7 @@
         </div>
     </div>
 
-    
-    <div class="footer">
-        <div class="support-text">If you find AmnGaze helpful, please consider supporting us:</div>
-        <div class="support-buttons">
-            <a href="https://www.buymeacoffee.com/alganzory">
-                <img data--h-breplaced="true" src="bmc-button.png"
-                    alt="Buy Me A Coffee" style="width: 180px !important;" class="social-link" alt="Buy Me A Coffee">
-            </a>
-            <!-- add vertical driver -->
-            <div style="width: 1px; height: 50px; background-color: #e2e8f0; margin-top: 15px;"></div>
-            <a href="https://www.patreon.com/amngaze" target="_blank" class="social-link">
-                <img data--h-breplaced="true" src="patreon.svg" alt="Patreon">
-                <span>Patreon</span>
-            </a>
-        </div>
-    </div>
-
+    <!-- Confirmation Modal -->
     <div class="modal" id="confirmation-modal">
         <div class="modal-content">
             <h2 class="modal-title">Unblock Site Confirmation</h2>
@@ -439,13 +474,29 @@
             <input type="text" class="input-text" id="confirmation-input" placeholder="Type the above text to confirm" autocomplete="off">
             <div class="error-message" id="error-message">The text doesn't match. Please type it exactly as shown.</div>
             <div class="button-group">
-                <button class="button" id="cancel-unblock">Go Back to Safety</button>
-                <button class="tertiary-button" id="confirm-unblock" disabled> Report and Unblock Site</button>
+                <button class="secondary-button" id="cancel-unblock" style="width: auto;">Cancel</button>
+                <button class="tertiary-button" id="confirm-unblock" disabled>Report and Unblock</button>
             </div>
         </div>
     </div>
 
+    <script>
+        // Update the target URL display from query parameter
+        try {
+            const urlParam = new URLSearchParams(window.location.search).get("url");
+            if (urlParam) {
+                const targetEl = document.getElementById("blocked-target-url");
+                if (targetEl) {
+                    try {
+                        const parsed = new URL(urlParam);
+                        targetEl.textContent = parsed.hostname || urlParam;
+                    } catch {
+                        targetEl.textContent = urlParam;
+                    }
+                }
+            }
+        } catch (e) {}
+    </script>
     <script src="blocked.js"></script>
 </body>
-
 </html>

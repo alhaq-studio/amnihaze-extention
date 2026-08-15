@@ -14,11 +14,19 @@ function zipDirectory(sourceDir, outPath) {
   if (fs.existsSync(outPath)) {
     fs.rmSync(outPath, { force: true });
   }
-  const result = spawnSync("tar", ["-a", "-c", "-f", outPath, "-C", sourceDir, "."], {
-    stdio: "inherit"
-  });
-  if (result.status !== 0) {
-    throw new Error(`Failed to create archive: ${outPath}`);
+  if (process.platform === "win32") {
+    const result = spawnSync("powershell", ["-NoProfile", "-Command", `Compress-Archive -Path '${sourceDir}\\*' -DestinationPath '${outPath}' -Force`], { stdio: "inherit" });
+    if (result.status !== 0) {
+      throw new Error(`Failed to create archive: ${outPath}`);
+    }
+  } else {
+    let result = spawnSync("zip", ["-r", outPath, "."], { cwd: sourceDir, stdio: "inherit" });
+    if (result.status !== 0) {
+      result = spawnSync("tar", ["-a", "-c", "-f", outPath, "-C", sourceDir, "."], { stdio: "inherit" });
+      if (result.status !== 0) {
+        throw new Error(`Failed to create archive: ${outPath}`);
+      }
+    }
   }
 }
 
@@ -32,7 +40,18 @@ function main() {
     throw new Error("Build outputs are missing. Run `npm run build` first.");
   }
 
-  zipDirectory(chromeSrc, path.join(distDir, `amngaze-v${version}-Chrome.zip`));
+  const chromeCwsSrc = path.join(buildDir, "chrome-cws");
+  if (fs.existsSync(chromeCwsSrc)) fs.rmSync(chromeCwsSrc, { recursive: true, force: true });
+  fs.cpSync(chromeSrc, chromeCwsSrc, { recursive: true });
+
+  const manifestPath = path.join(chromeCwsSrc, "manifest.json");
+  if (fs.existsSync(manifestPath)) {
+    const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf-8"));
+    delete manifest.key;
+    fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
+  }
+
+  zipDirectory(chromeCwsSrc, path.join(distDir, `amngaze-v${version}-Chrome.zip`));
   zipDirectory(firefoxSrc, path.join(distDir, `amngaze-v${version}-Firefox.zip`));
 
   // Also build the source code package for Firefox store reviewer validation
@@ -41,21 +60,30 @@ function main() {
   if (fs.existsSync(sourceOut)) {
     fs.rmSync(sourceOut, { force: true });
   }
-  const result = spawnSync("tar", [
-    "-a", "-c", "-f", sourceOut,
-    "--exclude=node_modules",
-    "--exclude=build",
-    "--exclude=dist",
-    "--exclude=extracted_zip",
-    "--exclude=.git",
-    "--exclude=.github",
-    "--exclude=.gemini",
-    "--exclude=scratch",
-    "."
+  let result = spawnSync("zip", [
+    "-r", sourceOut, ".",
+    "-x", "node_modules/*", "build/*", "dist/*", "extracted_zip/*", ".git/*", ".github/*", ".gemini/*", "scratch/*"
   ], {
     cwd: rootDir,
     stdio: "inherit"
   });
+  if (result.status !== 0) {
+    result = spawnSync("tar", [
+      "-a", "-c", "-f", sourceOut,
+      "--exclude=node_modules",
+      "--exclude=build",
+      "--exclude=dist",
+      "--exclude=extracted_zip",
+      "--exclude=.git",
+      "--exclude=.github",
+      "--exclude=.gemini",
+      "--exclude=scratch",
+      "."
+    ], {
+      cwd: rootDir,
+      stdio: "inherit"
+    });
+  }
   if (result.status !== 0) {
     throw new Error(`Failed to create source code archive: ${sourceOut}`);
   }

@@ -7,7 +7,7 @@
          "128": "src/assets/amngaze-icon-128.png"
       },
       "default_popup": "dist/popup/popup.html",
-      "default_title": "AmnGaze"
+      "default_title": "AmniHaze"
    },
    "author": "Afrasyaab Meranai",
    "background": {
@@ -29,7 +29,7 @@
    "content_security_policy": {
       "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'; worker-src 'self';"
    },
-   "description": "AmnGaze NFSW and Haram Content Blur",
+   "description": "AmniHaze (Amni Blur/Mask) — On-device real-time AI visual content moderation, image blurring, and privacy masking.",
    "host_permissions": [
       "<all_urls>"
    ],
@@ -43,7 +43,7 @@
    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAp5OhtiABBslQCzvFFlj/Q0wVKqHpx10+kZfouC7hmQkAHBV+eL0DxKdh5GRlX1vmaUibgr1icd118KlaKJrqduay1rsQuSciUEt4w7jrSoVnmagkVthux1YLjvf1QxnxG1VymF/hwfYCorRLmCbF1hftdsmD9tjckQPQ9k/YPna9Yb+WIxh3c87zu/pSFolUSsE6UD45LDulvmiCAlxmGRFjz9hqMc4ITklIE1mDpcrlyjn/n09hTHqZ6tXG1YxZP+JUZCGPRhuK/s/AI8laXekvPtTOkKlSmekUEWhfTEzE5Fxl4TWk2TLMA6izjLx/P3wEUjOt/Yx37EQpGE40jwIDAQAB",
    "manifest_version": 3,
    "minimum_chrome_version": "109",
-   "name": "AmnGaze",
+   "name": "AmniHaze - AI Visual Blur & Mask",
    "options_ui": {
       "open_in_tab": true,
       "page": "dist/options/options.html"

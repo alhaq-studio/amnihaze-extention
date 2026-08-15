@@ -1,16 +1,16 @@
-# AmnGaze Browser Extension
+# AmniHaze Browser Extension
 
-> 🛡️ **On-device AI visual content protection and image/video blurring for your browser.**
+> 🛡️ **AmniHaze (Amni Blur / Mask) — On-device AI visual content protection, real-time image blurring, and screen masking for your browser.**
 
-**AmnGaze Extension** is a privacy-first browser extension designed to protect your eyes and uphold digital purity. It automatically scans images and video frames on any webpage you visit, detects explicit or NSFW content using local **TensorFlow.js** models, and blurs them instantly before they can be displayed.
+**AmniHaze Extension** is a privacy-first browser extension designed to protect your eyes and uphold digital purity. It automatically scans images and video frames on any webpage you visit, detects explicit or NSFW content using local **TensorFlow.js** models, and blurs/masks them instantly before they can be displayed.
 
 ---
 
 ## 🌟 Key Features
 
 *   **Real-Time AI Moderation**: Scans web images and video thumbnails dynamically as the page loads.
-*   **100% Local & Private**: Model inference runs entirely in your browser using WebGL/WebAssembly. No image data or URLs are sent to any remote server.
-*   **Smart Blurring Overlay**: Replaces explicit visual assets with a custom blur overlay, which can be unblurred or configured via your dashboard.
+*   **100% Local & Private**: Model inference runs entirely in your browser using WebGL/WebAssembly. No image data or URLs are ever transmitted to any remote server.
+*   **Smart Blurring & Masking Overlay**: Replaces explicit visual assets with an elegant blur or solid color mask, customizable via your dashboard.
 *   **Cross-Browser Support**: Manifest V3 compliant, compatible with Google Chrome, Microsoft Edge, Brave, Mozilla Firefox, and Firefox for Android.
 
 ---
@@ -33,7 +33,7 @@
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/Afrasyaab-GH/amngaze-Extention.git
+   git clone https://github.com/alhaq-studio/amngaze-extension.git
    ```
 2. Open your browser and navigate to the extensions page (e.g., `chrome://extensions` or `about:debugging` in Firefox).
 3. Enable **Developer mode** / **Temporary Add-on loading**.

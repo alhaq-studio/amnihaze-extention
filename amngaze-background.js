@@ -28,7 +28,11 @@ const DEFAULT_SETTINGS = {
     passwordProtectionEnabled: false,
     uninstallPreventionEnabled: false,
     preventIncognitoGuestEnabled: false,
-    protectionMode: "free"
+    protectionMode: "free",
+    syncRulesEnabled: true,
+    syncAppUsageEnabled: true,
+    syncWebUsageEnabled: true,
+    smartRecommendationsEnabled: true
 };
 
 let creatingOffscreen = null;
@@ -393,15 +397,20 @@ async function syncWithAmnShieldGuardian() {
         clearTimeout(timer);
         if (!res.ok) return;
         const status = await res.json();
-        if (status && status.focus_mode_active) {
-            // Activate strict visual blur mode when Windows Guardian has Focus Mode active
-            chrome.storage.sync.get([SETTINGS_KEY], (stored) => {
-                const cfg = stored[SETTINGS_KEY] || { ...DEFAULT_SETTINGS };
-                if (!cfg.status) {
-                    cfg.status = true;
-                    chrome.storage.sync.set({ [SETTINGS_KEY]: cfg });
-                }
-            });
+        if (status) {
+            if (typeof status.is_premium === "boolean") {
+                chrome.storage.local.set({ "amngaze_guardian_is_premium": status.is_premium });
+            }
+            if (status.focus_mode_active) {
+                // Activate strict visual blur mode when Windows Guardian has Focus Mode active
+                chrome.storage.sync.get([SETTINGS_KEY], (stored) => {
+                    const cfg = stored[SETTINGS_KEY] || { ...DEFAULT_SETTINGS };
+                    if (!cfg.status) {
+                        cfg.status = true;
+                        chrome.storage.sync.set({ [SETTINGS_KEY]: cfg });
+                    }
+                });
+            }
         }
     } catch {
         // Silent fallback for standalone execution
@@ -415,4 +424,34 @@ chrome.alarms.onAlarm.addListener((alarm) => {
         syncWithAmnShieldGuardian();
     }
 });
+
+// ECDSA NIST P-256 License Verification for AmnGaze
+const PUBLIC_KEY_BASE64 = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE7EFR1qxpfZTMeR52M1+04+tPb6ItmVmhPbRCIJYje3jtglTdBbcct+/xvc1D1NZtXuvSb4Egtdqm/EJ6H67fEA==";
+
+async function verifyAmnGazeLicense(licenseKey) {
+    try {
+        const parts = licenseKey.trim().split(".");
+        if (parts.length !== 2) return null;
+        const [payloadBase64, sigBase64] = parts;
+        const payloadJson = atob(payloadBase64.replace(/-/g, "+").replace(/_/g, "/"));
+        const payload = JSON.parse(payloadJson);
+        if (!payload.expires || payload.expires < Date.now()) return null;
+
+        const derBinary = atob(PUBLIC_KEY_BASE64);
+        const derBytes = new Uint8Array(derBinary.length);
+        for (let i = 0; i < derBinary.length; i++) derBytes[i] = derBinary.charCodeAt(i);
+
+        const key = await crypto.subtle.importKey("spki", derBytes, { name: "ECDSA", namedCurve: "P-256" }, false, ["verify"]);
+        const sigBinary = atob(sigBase64.replace(/-/g, "+").replace(/_/g, "/"));
+        const sigBytes = new Uint8Array(sigBinary.length);
+        for (let i = 0; i < sigBinary.length; i++) sigBytes[i] = sigBinary.charCodeAt(i);
+
+        const encoder = new TextEncoder();
+        const isValid = await crypto.subtle.verify({ name: "ECDSA", hash: "SHA-256" }, key, sigBytes, encoder.encode(payloadJson));
+        return isValid ? payload : null;
+    } catch {
+        return null;
+    }
+}
+
 
