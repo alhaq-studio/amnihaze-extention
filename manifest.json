@@ -52,6 +52,7 @@
       "storage",
       "contextMenus",
       "scripting",
+      "declarativeNetRequest",
       "declarativeNetRequestWithHostAccess",
       "alarms",
       "tabs",

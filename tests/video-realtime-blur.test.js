@@ -107,4 +107,23 @@ assert.strictEqual(v.blurred, true, "Video should remain blurred during hold win
 mockApplyDetection(v, "clear", t0 + 1300);
 assert.strictEqual(v.blurred, false, "Video should unblur after hold window expires (+1300ms)");
 
+// 8. Validate Firefox Background HTML & Module Isolation
+const distBgHtmlPath = path.join(rootDir, "dist", "background.html");
+assert.ok(fs.existsSync(distBgHtmlPath), "dist/background.html must exist for Firefox MV3");
+const bgHtmlContent = fs.readFileSync(distBgHtmlPath, "utf8");
+assert.ok(
+  bgHtmlContent.includes('type="module"') && bgHtmlContent.includes('background.js') && bgHtmlContent.includes('offscreen.js'),
+  "dist/background.html must load background.js and offscreen.js as ES modules"
+);
+
+// 9. Validate Resilient Playback & ReadyState handling
+assert.ok(
+  contentCode.includes("addEventListener") && contentCode.includes("playing"),
+  "Content script must attach safe play and playing event listeners"
+);
+assert.ok(
+  contentCode.includes("readyState < 2") && distContentCode.includes("readyState < 2"),
+  "Content script must guard against unready video states to prevent Firefox drawImage exceptions"
+);
+
 console.log("Real-time video blur & Firefox performance tests passed successfully.");

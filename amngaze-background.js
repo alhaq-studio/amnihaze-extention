@@ -29,6 +29,9 @@ const DEFAULT_SETTINGS = {
     uninstallPreventionEnabled: false,
     preventIncognitoGuestEnabled: false,
     protectionMode: "free",
+    pageShieldEnabled: true,
+    nuditySensitivity: "balanced",
+    showShieldToast: true,
     syncRulesEnabled: true,
     syncAppUsageEnabled: true,
     syncWebUsageEnabled: true,
@@ -459,5 +462,134 @@ async function verifyAmnGazeLicense(licenseKey) {
         return null;
     }
 }
+
+// Adult / Pornographic Domain & Dynamic Rules Management
+const RULE_BASE_ID = 100;
+const ALLOW_BASE_ID = 10000;
+
+async function fetchAndGenerateBlockingRules() {
+    try {
+        let blockData = null;
+        try {
+            const res = await fetch("https://raw.githubusercontent.com/alganzoryP/hb-related/refs/heads/main/blocklist.json", { cache: "no-cache" });
+            if (res.ok) {
+                blockData = await res.json();
+                if (blockData?.blocked?.length) {
+                    await chrome.storage.local.set({ "amngaze_cached_blocklist": blockData });
+                }
+            }
+        } catch (fetchErr) {
+            console.warn("[AmniHaze-BLOCK] Remote blocklist fetch failed:", fetchErr);
+        }
+
+        if (!blockData?.blocked?.length) {
+            const cached = await chrome.storage.local.get("amngaze_cached_blocklist");
+            blockData = cached?.amngaze_cached_blocklist;
+        }
+
+        if (!blockData?.blocked?.length) {
+            try {
+                const localRes = await fetch(chrome.runtime.getURL("data/blocklists/adult-domains.json"));
+                if (localRes.ok) {
+                    const localList = await localRes.json();
+                    if (Array.isArray(localList) && localList.length) {
+                        blockData = {
+                            blocked: localList,
+                            allowed: ["google.com", "bing.com", "duckduckgo.com", "youtube.com", "wikipedia.org", "github.com", "alhaq-initiative.org"]
+                        };
+                    }
+                }
+            } catch {}
+        }
+
+        if (!blockData?.blocked?.length) {
+            blockData = {
+                blocked: [
+                    "pornhub.com", "xvideos.com", "xnxx.com", "xhamster.com", "redtube.com",
+                    "youporn.com", "tube8.com", "beeg.com", "chaturbate.com", "stripchat.com",
+                    "onlyfans.com", "camsoda.com", "livejasmin.com", "bonga.com", "spankbang.com",
+                    "eporner.com", "tnaflix.com", "heavy-r.com", "hentaihaven.xxx", "nhentai.net",
+                    "hanime.tv", "rule34.xxx", "gelbooru.com", "e-hentai.org", "luscious.net",
+                    "brazzers.com", "bangbros.com", "realitykings.com", "naughtyamerica.com", "mofos.com",
+                    "motherless.com", "daftsex.com", "hqporner.com", "fuq.com", "thumbzilla.com"
+                ],
+                allowed: ["google.com", "bing.com", "duckduckgo.com", "youtube.com", "wikipedia.org", "github.com", "alhaq-initiative.org"]
+            };
+        }
+
+        const { blocked = [], allowed = [] } = blockData;
+        const blockedChunks = [];
+        const combined = blocked.reduce((acc, curr, idx) => {
+            if (idx % 5 === 0) {
+                blockedChunks.push(acc);
+                return curr;
+            }
+            return `${acc}|${curr}`;
+        });
+        blockedChunks.push(combined);
+
+        const blockRules = blockedChunks.map((chunk, idx) => ({
+            id: RULE_BASE_ID + idx,
+            priority: 1,
+            action: {
+                type: "redirect",
+                redirect: { regexSubstitution: `${chrome.runtime.getURL("src/assets/blocked/blocked.html")}?url=\\0` }
+            },
+            condition: {
+                regexFilter: `^[^:]*:\\/\\/(?:[^/]*(?:${chunk}))[^/]*\\/`,
+                resourceTypes: ["main_frame"]
+            }
+        }));
+
+        const allowRules = allowed.map((domain, idx) => ({
+            id: ALLOW_BASE_ID + idx,
+            priority: 2,
+            action: { type: "allow" },
+            condition: {
+                regexFilter: `^[^:]*:\\/\\/(?:(?:www\\.)?(?:[^\\/]*\\.)?${domain}\\.[^\\/]*)\\/`,
+                resourceTypes: ["main_frame"]
+            }
+        }));
+
+        const customAllowed = ((await chrome.storage.sync.get("AmnGaze-allowed-sites"))["AmnGaze-allowed-sites"] || []).map((domain, idx) => ({
+            id: ALLOW_BASE_ID + allowed.length + idx,
+            priority: 3,
+            action: { type: "allow" },
+            condition: {
+                urlFilter: `||${domain}^`,
+                resourceTypes: ["main_frame"]
+            }
+        }));
+
+        return [...blockRules, ...allowRules, ...customAllowed];
+    } catch (err) {
+        console.error("[AmniHaze-BLOCK] Error generating blocking rules:", err);
+        return [];
+    }
+}
+
+async function updateDynamicBlockingRules() {
+    try {
+        if (!chrome?.declarativeNetRequest) return;
+        const existingRules = await chrome.declarativeNetRequest.getDynamicRules();
+        const removeRuleIds = existingRules.map(r => r.id);
+        const newRules = await fetchAndGenerateBlockingRules();
+        if (newRules && newRules.length > 0) {
+            await chrome.declarativeNetRequest.updateDynamicRules({ removeRuleIds, addRules: newRules });
+            console.log(`[AmniHaze-BLOCK] Dynamic adult blocking rules active (${newRules.length} rules)`);
+        }
+    } catch (err) {
+        console.error("[AmniHaze-BLOCK] Error updating dynamic rules:", err);
+    }
+}
+
+// Initialize dynamic network rules on startup
+updateDynamicBlockingRules();
+chrome.runtime.onInstalled?.addListener(() => {
+    updateDynamicBlockingRules();
+});
+chrome.runtime.onStartup?.addListener(() => {
+    updateDynamicBlockingRules();
+});
 
 

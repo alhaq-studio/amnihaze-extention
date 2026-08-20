@@ -11,7 +11,8 @@ const testFiles = [
   "scheduler.test.js",
   "integration.test.js",
   "settings-and-port-communication.test.js",
-  "video-realtime-blur.test.js"
+  "video-realtime-blur.test.js",
+  "porn-nsfw-protection.test.js"
 ];
 
 for (const testFile of testFiles) {

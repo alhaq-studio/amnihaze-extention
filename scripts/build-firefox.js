@@ -76,21 +76,21 @@ if (fs.existsSync(chromeManifestPath)) {
   
   const firefoxManifest = { ...chromeManifest };
   
-  // 1. Convert service_worker to background.scripts for Firefox
-  // We load BOTH background.js and offscreen.js in Firefox background page context
-  if (firefoxManifest.background && firefoxManifest.background.service_worker) {
-    firefoxManifest.background.scripts = [
-      firefoxManifest.background.service_worker,
-      "dist/offscreen.js"
-    ];
+  // 1. Configure background.page for Firefox MV3
+  // Using background.html with <script type="module"> isolates background.js and offscreen.js
+  // scopes from each other, preventing variable collision while granting full DOM/canvas/WebGL access.
+  if (firefoxManifest.background) {
     delete firefoxManifest.background.service_worker;
+    delete firefoxManifest.background.scripts;
+    delete firefoxManifest.background.type;
+    firefoxManifest.background.page = "dist/background.html";
   }
   
   // 2. Add browser_specific_settings and data_collection_permissions for Firefox
   firefoxManifest.browser_specific_settings = {
     gecko: {
       id: "amngaze@alhaq.studio",
-      strict_min_version: "140.0",
+      strict_min_version: "109.0",
       data_collection_permissions: {
         required: ["none"]
       }

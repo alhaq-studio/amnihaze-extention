@@ -1,66 +1,62 @@
-# Build Instructions for AmniHaze Extension
+# Build & Publication Instructions for AmniHaze Extension
 
 ## Prerequisites
 
-- Node.js 18+ or later
-- npm (comes with Node.js)
+- Node.js 18+ (Node.js 20+ recommended)
+- npm (bundled with Node.js)
+- Standard system `zip` or `tar` utility
 
-## Build Steps
+---
 
-1. **Install dependencies:**
+## Quick Build & Test Workflow
 
+1. **Install Dependencies:**
    ```bash
    npm install
    ```
 
-2. **Build Chrome and Firefox packages:**
+2. **Run Full Test Suite:**
+   ```bash
+   npm test
+   ```
+   *Runs 8 test suites verifying manifest schema, blocklists, scheduler, video blur, settings communication, and NSFW protection.*
 
+3. **Compile Browser Targets:**
    ```bash
    npm run build
    ```
+   *Compiles clean distribution builds for Chromium (`build/chrome/`) and Firefox (`build/firefox/`).*
 
-3. **Create ZIP packages for distribution:**
-
+4. **Create Production Release ZIPs:**
    ```bash
    npm run dist
    ```
+   *Packages store-ready `.zip` archives into `dist/`.*
 
-4. **Output locations:**
-   - Chrome build: `build/chrome/`
-   - Firefox build: `build/firefox/`
-   - Chrome Zip: `dist/amnihaze-v0.2.0-Chrome.zip`
-   - Firefox Zip: `dist/amnihaze-v0.2.0-Firefox.zip`
+---
 
-## Build Process Details
+## Output Artifacts
 
-### File Processing
+| Output Directory / Archive | Target Browser | Description |
+| :--- | :--- | :--- |
+| `build/chrome/` | Chrome / Edge / Brave | Unpacked Chromium Manifest V3 directory for local testing. |
+| `build/firefox/` | Mozilla Firefox | Unpacked Firefox Manifest V3 directory with isolated background page. |
+| `dist/amnihaze-v0.2.0-Chrome.zip` | Chrome Web Store / Edge Store | Production zip package stripped of development keys. |
+| `dist/amnihaze-v0.2.0-Firefox.zip` | Mozilla Add-ons (AMO) | Gecko-compliant production zip package. |
+| `dist/amnihaze-v0.2.0-Source.zip` | Firefox Reviewer Source | Clean source archive for Mozilla add-on review validation. |
 
-The build scripts perform the following operations:
+---
 
-1. **Copies core extension files** from root to `build/chrome/` and `build/firefox/`:
-   - `manifest.json` for Chrome (manifest-v2.json renamed to `manifest.json` for Firefox)
-   - All content scripts, HTML files, CSS, and JavaScript files
+## Browser Testing Verification Steps
 
-2. **Copies assets:**
-   - `/images` and `/assets` folders with all icons, logos, and onboarding graphics
-   - `/services` folder with prayer times and wellness features
-   - `/data` folder with blocklists
+### Google Chrome / Microsoft Edge / Brave
+1. Navigate to `chrome://extensions` or `edge://extensions`.
+2. Enable **Developer mode** toggle.
+3. Click **Load unpacked** and select `build/chrome/`.
+4. Test real-time image blurring, video streaming blur on YouTube, Full-Page Shield toggle in popup, and warning toast dismiss/unshield actions.
 
-3. **Creates distribution package:**
-   - Zips the `build/chrome/` and `build/firefox/` directories
-   - Outputs them to the `dist/` directory
-
-## Verification
-
-After building, verify that:
-- `build/chrome/` and `build/firefox/` directories contain the correct assets.
-- `dist/` contains both compiled ZIP files.
-
-## Clean Build
-
-To rebuild from scratch:
-
-```bash
-npm run build
-npm run dist
-```
+### Mozilla Firefox
+1. Navigate to `about:debugging#/runtime/this-firefox`.
+2. Click **Load Temporary Add-on...**.
+3. Select `build/firefox/manifest.json`.
+4. Test video playback inspection, background network blocking, and settings synchronization.
