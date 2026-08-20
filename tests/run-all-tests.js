@@ -10,6 +10,7 @@ const testFiles = [
   "social-blocking-logic.test.js",
   "scheduler.test.js",
   "integration.test.js",
+  "settings-and-port-communication.test.js",
   "video-realtime-blur.test.js"
 ];
 

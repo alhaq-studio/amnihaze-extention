@@ -8,6 +8,6 @@
     "test": "node tests/run-all-tests.js",
     "dist": "node scripts/create-distribution.js"
   },
-  "author": "Afrasyaab Meranai",
+  "author": "Al-Haq Studio",
   "license": "MIT"
 }

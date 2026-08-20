@@ -329,9 +329,10 @@ function injectReportModal(tabId, srcUrl, pageUrl, originalSrc) {
 
 // Handle messaging routing & lifecycle
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.type === "amngaze-getSettings" || request.type === "AmniHaze-getSettings") {
-        chrome.storage.sync.get(["AmniHaze-settings", "amngaze-settings"], (res) => {
-            const config = res["AmniHaze-settings"] || res["amngaze-settings"] || DEFAULT_SETTINGS;
+    if (request.type === "amngaze-getSettings" || request.type === "AmniHaze-getSettings" || request.type === "AmnGaze-getSettings") {
+        chrome.storage.sync.get(["AmniHaze-settings", "amngaze-settings", "AmnGaze-settings"], (res) => {
+            const config = res["AmniHaze-settings"] || res["amngaze-settings"] || res["AmnGaze-settings"] || DEFAULT_SETTINGS;
+            if (!Array.isArray(config.whitelist)) config.whitelist = [];
             sendResponse(config);
         });
         return true;
@@ -349,12 +350,17 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 
     if (request.type === "updateSettings") {
-        const { key, value } = request.newSetting;
-        chrome.storage.sync.get([SETTINGS_KEY], (res) => {
-            const config = res[SETTINGS_KEY] || { ...DEFAULT_SETTINGS };
-            config[key] = value;
-            chrome.storage.sync.set({ [SETTINGS_KEY]: config }, () => {
-                sendResponse({ success: true });
+        const { key, value } = request.newSetting || {};
+        chrome.storage.sync.get(["AmniHaze-settings", "amngaze-settings", "AmnGaze-settings"], (res) => {
+            const config = res["AmniHaze-settings"] || res["amngaze-settings"] || res["AmnGaze-settings"] || { ...DEFAULT_SETTINGS };
+            if (key !== undefined) config[key] = value;
+            if (!Array.isArray(config.whitelist)) config.whitelist = [];
+            chrome.storage.sync.set({
+                "AmniHaze-settings": config,
+                "amngaze-settings": config,
+                "AmnGaze-settings": config
+            }, () => {
+                sendResponse({ success: true, key, value });
             });
         });
         return true;
