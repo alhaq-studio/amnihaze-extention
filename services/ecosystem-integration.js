@@ -1,6 +1,6 @@
 /**
  * ecosystem-integration.js
- * Service worker module for integrating all AmnGaze ecosystem features
+ * Service worker module for integrating all AmniHaze ecosystem features
  */
 
 import prayerService from './prayer-service.js';

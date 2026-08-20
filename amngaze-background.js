@@ -1,9 +1,9 @@
 /**
  * amngaze-background.js
- * AI content blur background manager adapted from AmnGaze.
+ * AI content blur background manager adapted from AmniHaze.
  */
 
-const SETTINGS_KEY = "AmnGaze-settings";
+const SETTINGS_KEY = "AmniHaze-settings";
 
 // Default Settings
 const DEFAULT_SETTINGS = {
@@ -99,7 +99,7 @@ async function recreateOffscreen() {
 // Watch settings changes and broadcast to tabs/offscreen
 chrome.storage.onChanged.addListener((changes, area) => {
     if (area !== "sync") return;
-    const settingsChange = changes["AmnGaze-settings"] || changes["amngaze-settings"];
+    const settingsChange = changes["AmniHaze-settings"] || changes["amngaze-settings"];
     if (!settingsChange) return;
 
     const oldValue = settingsChange.oldValue || {};
@@ -148,7 +148,7 @@ chrome.runtime.onInstalled.addListener(() => {
         const err = chrome.runtime.lastError; // silence errors
         chrome.contextMenus.create({
             id: "report-image",
-            title: "AmnGaze - Report Image",
+            title: "AmniHaze - Report Image",
             contexts: ["image"],
             enabled: true
         });
@@ -181,7 +181,7 @@ function injectReportModal(tabId, srcUrl, pageUrl, originalSrc) {
               <div class="amngaze-modal-content">
                 <div class="amngaze-modal-header">
                   <div class="amngaze-header-title">
-                    <img src="${extUrl}src/assets/amngaze-icon-48.png" width="24" height="24" alt="AmnGaze">
+                    <img src="${extUrl}src/assets/amngaze-icon-48.png" width="24" height="24" alt="AmniHaze">
                     <h3>Report Image</h3>
                   </div>
                   <button class="amngaze-close-button">&times;</button>
@@ -312,7 +312,7 @@ function injectReportModal(tabId, srcUrl, pageUrl, originalSrc) {
                     content.innerHTML = `
                     <div class="amngaze-success-message">
                       <h3>Thank You!</h3>
-                      <p>Your report has been submitted successfully.<br>We appreciate your help in improving AmnGaze.</p>
+                      <p>Your report has been submitted successfully.<br>We appreciate your help in improving AmniHaze.</p>
                     </div>
                     `;
                     setTimeout(close, 2000);
@@ -324,14 +324,14 @@ function injectReportModal(tabId, srcUrl, pageUrl, originalSrc) {
             });
         },
         args: [srcUrl, pageUrl, originalSrc, chrome.runtime.getURL("")]
-    }).catch(err => console.error("AmnGaze== executeScript failed:", err.message));
+    }).catch(err => console.error("AmniHaze== executeScript failed:", err.message));
 }
 
 // Handle messaging routing & lifecycle
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.type === "amngaze-getSettings" || request.type === "AmnGaze-getSettings") {
-        chrome.storage.sync.get(["AmnGaze-settings", "amngaze-settings"], (res) => {
-            const config = res["AmnGaze-settings"] || res["amngaze-settings"] || DEFAULT_SETTINGS;
+    if (request.type === "amngaze-getSettings" || request.type === "AmniHaze-getSettings") {
+        chrome.storage.sync.get(["AmniHaze-settings", "amngaze-settings"], (res) => {
+            const config = res["AmniHaze-settings"] || res["amngaze-settings"] || DEFAULT_SETTINGS;
             sendResponse(config);
         });
         return true;
@@ -380,8 +380,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 // Auto-manage offscreen document on start
-chrome.storage.sync.get(["AmnGaze-settings", "amngaze-settings"], (res) => {
-    const config = res["AmnGaze-settings"] || res["amngaze-settings"] || DEFAULT_SETTINGS;
+chrome.storage.sync.get(["AmniHaze-settings", "amngaze-settings"], (res) => {
+    const config = res["AmniHaze-settings"] || res["amngaze-settings"] || DEFAULT_SETTINGS;
     if (config.status) {
         ensureOffscreenDocument();
     }
@@ -425,7 +425,7 @@ chrome.alarms.onAlarm.addListener((alarm) => {
     }
 });
 
-// ECDSA NIST P-256 License Verification for AmnGaze
+// ECDSA NIST P-256 License Verification for AmniHaze
 const PUBLIC_KEY_BASE64 = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE7EFR1qxpfZTMeR52M1+04+tPb6ItmVmhPbRCIJYje3jtglTdBbcct+/xvc1D1NZtXuvSb4Egtdqm/EJ6H67fEA==";
 
 async function verifyAmnGazeLicense(licenseKey) {

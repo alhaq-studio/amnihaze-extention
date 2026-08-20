@@ -354,7 +354,7 @@
 
   // Expose on a global namespace
   try {
-    global.AmnGaze = global.AmnGaze || {};
-    global.AmnGaze.scheduler = SCHEDULER;
+    global.AmniHaze = global.AmniHaze || {};
+    global.AmniHaze.scheduler = SCHEDULER;
   } catch { }
 })(typeof self !== 'undefined' ? self : (typeof globalThis !== 'undefined' ? globalThis : window));

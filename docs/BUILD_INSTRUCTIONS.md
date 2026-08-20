@@ -1,4 +1,4 @@
-# Build Instructions for AmnGaze Extension
+# Build Instructions for AmniHaze Extension
 
 ## Prerequisites
 

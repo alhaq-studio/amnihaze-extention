@@ -6,7 +6,7 @@ Investigate the existing build setup, node dependencies, static assets/models, a
 ## 🔒 My Identity
 - Archetype: Survey Explorer 2
 - Roles: Build Pipeline & Dependencies Explorer
-- Working directory: d:/PROJECTS/AmnGaze/AmnGaze-Extention/.agents/teamwork_preview_explorer_survey_2
+- Working directory: d:/PROJECTS/AmniHaze/AmniHaze-Extention/.agents/teamwork_preview_explorer_survey_2
 - Original parent: f5cb5ec6-319f-4d79-b453-eaa6206819ec
 - Milestone: Survey & Build Architecture Evaluation
 
@@ -27,6 +27,6 @@ Investigate the existing build setup, node dependencies, static assets/models, a
 - Proceeding with read-only survey of build scripts, assets, package.json, and bundler tooling analysis.
 
 ## Artifact Index
-- d:/PROJECTS/AmnGaze/AmnGaze-Extention/.agents/teamwork_preview_explorer_survey_2/DISPATCH.md — Dispatch log
-- d:/PROJECTS/AmnGaze/AmnGaze-Extention/.agents/teamwork_preview_explorer_survey_2/BRIEFING.md — Working briefing index
-- d:/PROJECTS/AmnGaze/AmnGaze-Extention/.agents/teamwork_preview_explorer_survey_2/handoff.md — Final handoff report
+- d:/PROJECTS/AmniHaze/AmniHaze-Extention/.agents/teamwork_preview_explorer_survey_2/DISPATCH.md — Dispatch log
+- d:/PROJECTS/AmniHaze/AmniHaze-Extention/.agents/teamwork_preview_explorer_survey_2/BRIEFING.md — Working briefing index
+- d:/PROJECTS/AmniHaze/AmniHaze-Extention/.agents/teamwork_preview_explorer_survey_2/handoff.md — Final handoff report

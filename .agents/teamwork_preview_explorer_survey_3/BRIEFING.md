@@ -6,13 +6,13 @@ Investigate MV3 compliance across Chrome and Firefox (incognito split, CSP, offs
 ## 🔒 My Identity
 - Archetype: Survey Explorer 3
 - Roles: MV3 Compliance & Test Suite Explorer
-- Working directory: d:/PROJECTS/AmnGaze/AmnGaze-Extention/.agents/teamwork_preview_explorer_survey_3
+- Working directory: d:/PROJECTS/AmniHaze/AmniHaze-Extention/.agents/teamwork_preview_explorer_survey_3
 - Original parent: f5cb5ec6-319f-4d79-b453-eaa6206819ec
 - Milestone: Explorer Survey Phase
 
 ## 🔒 Key Constraints
 - Read-only investigation — do NOT modify source code (except agent metadata files in working directory)
-- Produce structured report at d:/PROJECTS/AmnGaze/AmnGaze-Extention/.agents/teamwork_preview_explorer_survey_3/handoff.md
+- Produce structured report at d:/PROJECTS/AmniHaze/AmniHaze-Extention/.agents/teamwork_preview_explorer_survey_3/handoff.md
 - Communicate result back via send_message to parent agent
 
 ## Current Parent
@@ -28,5 +28,5 @@ Investigate MV3 compliance across Chrome and Firefox (incognito split, CSP, offs
 - [TBD]
 
 ## Artifact Index
-- d:/PROJECTS/AmnGaze/AmnGaze-Extention/.agents/teamwork_preview_explorer_survey_3/DISPATCH.md — Initial dispatch prompt
-- d:/PROJECTS/AmnGaze/AmnGaze-Extention/.agents/teamwork_preview_explorer_survey_3/BRIEFING.md — Working memory index
+- d:/PROJECTS/AmniHaze/AmniHaze-Extention/.agents/teamwork_preview_explorer_survey_3/DISPATCH.md — Initial dispatch prompt
+- d:/PROJECTS/AmniHaze/AmniHaze-Extention/.agents/teamwork_preview_explorer_survey_3/BRIEFING.md — Working memory index

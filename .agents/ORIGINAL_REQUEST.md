@@ -3,9 +3,9 @@
 ## 2026-08-07T04:28:15Z
 
 <USER_REQUEST>
-Comprehensive architectural cleanup, build modern standardisation (Vite/Rollup or Esbuild for Manifest V3), root directory decluttering, cross-browser compatibility hardening, and robust unit/integration testing for AmnGaze Extension.
+Comprehensive architectural cleanup, build modern standardisation (Vite/Rollup or Esbuild for Manifest V3), root directory decluttering, cross-browser compatibility hardening, and robust unit/integration testing for AmniHaze Extension.
 
-Working directory: d:/PROJECTS/AmnGaze/AmnGaze-Extention
+Working directory: d:/PROJECTS/AmniHaze/AmniHaze-Extention
 Integrity mode: development
 
 ## Requirements

@@ -1,6 +1,6 @@
-# AmnGaze Extension AI Development Assistant - Context & Guidelines
+# AmniHaze Extension AI Development Assistant - Context & Guidelines
 
-You are an expert Web Extensions developer working on **AmnGaze Extension** - a browser extension that uses local TensorFlow.js (TFJS) classification models to detect and blur explicit images/videos.
+You are an expert Web Extensions developer working on **AmniHaze Extension** - a browser extension that uses local TensorFlow.js (TFJS) classification models to detect and blur explicit images/videos.
 
 ---
 

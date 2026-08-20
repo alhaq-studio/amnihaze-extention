@@ -1,18 +1,18 @@
 # BRIEFING — 2026-08-07T05:28:42Z
 
 ## Mission
-Orchestrate AmnGaze Extension cleanup, modern build pipeline standardisation (MV3 Chrome/Firefox), directory decluttering, MV3 hardening, and automated testing suite setup.
+Orchestrate AmniHaze Extension cleanup, modern build pipeline standardisation (MV3 Chrome/Firefox), directory decluttering, MV3 hardening, and automated testing suite setup.
 
 ## 🔒 My Identity
 - Archetype: Project Orchestrator
 - Roles: orchestrator, user_liaison, human_reporter, successor
-- Working directory: d:/PROJECTS/AmnGaze/AmnGaze-Extention/.agents/orchestrator
+- Working directory: d:/PROJECTS/AmniHaze/AmniHaze-Extention/.agents/orchestrator
 - Original parent: parent
 - Original parent conversation ID: c0474c44-09f1-434f-9978-5e8c3fd94f28
 
 ## 🔒 My Workflow
 - **Pattern**: Project Pattern
-- **Scope document**: d:/PROJECTS/AmnGaze/AmnGaze-Extention/PROJECT.md
+- **Scope document**: d:/PROJECTS/AmniHaze/AmniHaze-Extention/PROJECT.md
 1. **Decompose**: Survey codebase via 3 parallel Explorers, build Feature Inventory & Architecture, decompose into Milestones (M1..MN) and Dual Tracks (Implementation Track + E2E Testing Track).
 2. **Dispatch & Execute**:
    - Top-Level Orchestrator dispatches sub-orchestrators for milestones and testing track.
@@ -47,7 +47,7 @@ Orchestrate AmnGaze Extension cleanup, modern build pipeline standardisation (MV
 - Updated: not yet
 
 ## Key Decisions Made
-- Initializing Project Pattern orchestrator for AmnGaze Extension cleanup & MV3 modernization.
+- Initializing Project Pattern orchestrator for AmniHaze Extension cleanup & MV3 modernization.
 - Dispatched 3 Survey Explorers in parallel (Codebase & Files, Build & Dependencies, MV3 Compliance & Test Suite).
 
 ## Team Roster
@@ -69,7 +69,7 @@ Orchestrate AmnGaze Extension cleanup, modern build pipeline standardisation (MV
 - Safety timer: none
 
 ## Artifact Index
-- d:/PROJECTS/AmnGaze/AmnGaze-Extention/.agents/ORIGINAL_REQUEST.md — User Requirements
-- d:/PROJECTS/AmnGaze/AmnGaze-Extention/.agents/orchestrator/DISPATCH.md — Parent Dispatch
-- d:/PROJECTS/AmnGaze/AmnGaze-Extention/.agents/orchestrator/BRIEFING.md — Briefing Memory
-- d:/PROJECTS/AmnGaze/AmnGaze-Extention/.agents/orchestrator/progress.md — Liveness & Progress Checklist
+- d:/PROJECTS/AmniHaze/AmniHaze-Extention/.agents/ORIGINAL_REQUEST.md — User Requirements
+- d:/PROJECTS/AmniHaze/AmniHaze-Extention/.agents/orchestrator/DISPATCH.md — Parent Dispatch
+- d:/PROJECTS/AmniHaze/AmniHaze-Extention/.agents/orchestrator/BRIEFING.md — Briefing Memory
+- d:/PROJECTS/AmniHaze/AmniHaze-Extention/.agents/orchestrator/progress.md — Liveness & Progress Checklist

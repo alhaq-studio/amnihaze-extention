@@ -1,6 +1,6 @@
-# AmnGaze-Extention Workspace Agent Configuration
+# AmniHaze-Extention Workspace Agent Configuration
 
-This repository (`AmnGaze-Extention` / `alhaq-studio/amngaze-extention`) is part of the **Amn Product Family**.
+This repository (`AmniHaze-Extention` / `alhaq-studio/amngaze-extention`) is part of the **Amn Product Family**.
 
 ## Active Agent Profile: `amn-ecosystem-agent`
 - Full Architecture, Roadmap, and Product Specifications: `~/.gemini/config/agents/amn-ecosystem-agent.md`

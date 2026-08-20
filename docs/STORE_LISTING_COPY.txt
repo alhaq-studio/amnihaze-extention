@@ -1,5 +1,5 @@
 ===========================================
-AmnGaze - STORE LISTING COPY
+AmniHaze - STORE LISTING COPY
 ===========================================
 
 ===========================================
@@ -27,11 +27,11 @@ Live by Your Values
 3. DETAILED DESCRIPTION (First 500 chars)
 ===========================================
 
-AmnGaze – Stay Focused, Browse Safely, Live by Your Values
+AmniHaze – Stay Focused, Browse Safely, Live by Your Values
 
-AmnGaze is a Chrome extension that helps Muslims stay productive and protect their faith online. It blocks haram and harmful content, reduces distractions, and provides an optional Islamic new-tab experience with Qur'an, adhkaar, and prayer times — right when you start your browsing.
+AmniHaze is a Chrome extension that helps Muslims stay productive and protect their faith online. It blocks haram and harmful content, reduces distractions, and provides an optional Islamic new-tab experience with Qur'an, adhkaar, and prayer times — right when you start your browsing.
 
-Why install AmnGaze?
+Why install AmniHaze?
 
 Faith-aligned protection – filters categories like gambling, riba/interest, adult content, and more.
 Stay focused – reduce social media and time-wasting sites so you can use your time wisely.
@@ -65,19 +65,19 @@ Perfect for students, professionals, and families who want to browse with peace 
 5. ONE-SENTENCE PITCH
 ===========================================
 
-AmnGaze helps Muslims browse safely with automatic haram content blocking, distraction reduction, and an inspiring Islamic new tab featuring Qur'an, adhkaar, and prayer times - all while respecting your privacy with 100% local storage.
+AmniHaze helps Muslims browse safely with automatic haram content blocking, distraction reduction, and an inspiring Islamic new tab featuring Qur'an, adhkaar, and prayer times - all while respecting your privacy with 100% local storage.
 
 ===========================================
 6. CALL TO ACTION
 ===========================================
 
-🕌 Install AmnGaze today and transform your browsing experience! Stay focused, browse safely, and stay spiritually connected - all with one powerful extension.
+🕌 Install AmniHaze today and transform your browsing experience! Stay focused, browse safely, and stay spiritually connected - all with one powerful extension.
 
 ===========================================
 7. SOCIAL MEDIA POST (280 chars - Twitter)
 ===========================================
 
-🕌 AmnGaze: Your Islamic browsing companion
+🕌 AmniHaze: Your Islamic browsing companion
 
 ✅ Block haram content
 ✅ Reduce distractions  
@@ -93,11 +93,11 @@ Free on Chrome/Firefox/Edge! 🌟
 8. FACEBOOK/LINKEDIN POST
 ===========================================
 
-🕌 Introducing AmnGaze - Your Islamic Browsing Companion
+🕌 Introducing AmniHaze - Your Islamic Browsing Companion
 
 Are you struggling to maintain focus online? Worried about stumbling upon inappropriate content? Want to stay spiritually connected while browsing?
 
-AmnGaze is here to help! 
+AmniHaze is here to help! 
 
 🛡️ Smart Protection:
 • Blocks 10,000+ inappropriate websites
@@ -124,14 +124,14 @@ Download now for Chrome, Firefox, or Edge.
 
 🌟 Stay focused. Browse safely. Live by your values.
 
-#AmnGaze #IslamicTech #Muslim #Productivity #DigitalWellbeing #Halal #Islamic #Faith
+#AmniHaze #IslamicTech #Muslim #Productivity #DigitalWellbeing #Halal #Islamic #Faith
 
 ===========================================
 9. PROMOTIONAL IMAGES TEXT SUGGESTIONS
 ===========================================
 
 Image 1: Hero Image
-"AmnGaze"
+"AmniHaze"
 "Your Islamic Browsing Companion"
 "Block Haram • Stay Focused • Spiritual Growth"
 
@@ -163,7 +163,7 @@ Image 5: Free
 [0-5s] Text on screen: "Struggling to stay focused online?"
 [5-10s] Show person distracted by social media
 [10-15s] Text: "Worried about inappropriate content?"
-[15-20s] Logo reveal: "Introducing AmnGaze"
+[15-20s] Logo reveal: "Introducing AmniHaze"
 [20-30s] Show features:
   - "Block haram content automatically"
   - "Reduce social media distractions"
@@ -175,18 +175,18 @@ Image 5: Free
   - Dhikr counter
 [40-50s] Text: "100% Private • Zero Tracking • Free Forever"
 [50-55s] "Transform your browsing experience"
-[55-60s] "Download AmnGaze today"
+[55-60s] "Download AmniHaze today"
 CTA: Website URL and download links
 
 ===========================================
 11. EMAIL ANNOUNCEMENT
 ===========================================
 
-Subject: 🕌 AmnGaze v1.7 - Transform Your Browsing Experience
+Subject: 🕌 AmniHaze v1.7 - Transform Your Browsing Experience
 
 Assalamu Alaikum,
 
-We're excited to announce the major release of AmnGaze v1.7 - your complete Islamic browsing companion!
+We're excited to announce the major release of AmniHaze v1.7 - your complete Islamic browsing companion!
 
 🌟 WHAT'S NEW:
 
@@ -234,7 +234,7 @@ P.S. We'd love your feedback! Reply to this email or visit our GitHub page.
 ===========================================
 
 HEADLINE:
-Alhaq Initiative Launches AmnGaze v1.7: Comprehensive Islamic Browsing Companion with DeenHub New Tab Experience
+Alhaq Initiative Launches AmniHaze v1.7: Comprehensive Islamic Browsing Companion with DeenHub New Tab Experience
 
 SUBHEAD:
 New Browser Extension Helps Muslims Stay Productive, Block Harmful Content, and Maintain Spiritual Connection with Qur'an, Adhkaar, and Prayer Times - All While Respecting Privacy with 100% Local Storage
@@ -243,7 +243,7 @@ New Browser Extension Helps Muslims Stay Productive, Block Harmful Content, and 
 13. SEO META DESCRIPTION
 ===========================================
 
-AmnGaze: Islamic browser extension blocking haram content, social media distractions. Features DeenHub new tab with Qur'an, adhkaar, prayer times. 100% private. Free for Chrome, Firefox, Edge.
+AmniHaze: Islamic browser extension blocking haram content, social media distractions. Features DeenHub new tab with Qur'an, adhkaar, prayer times. 100% private. Free for Chrome, Firefox, Edge.
 
 Character count: 198 (under 160 recommended, but includes all keywords)
 
@@ -288,7 +288,7 @@ Long-tail Keywords:
 15. COMPARISON TO COMPETITORS
 ===========================================
 
-Why Choose AmnGaze Over Generic Content Blockers?
+Why Choose AmniHaze Over Generic Content Blockers?
 
 ❌ Other Blockers:
 • No Islamic features
@@ -297,7 +297,7 @@ Why Choose AmnGaze Over Generic Content Blockers?
 • Often paid/subscription
 • May track your data
 
-✅ AmnGaze:
+✅ AmniHaze:
 • Built specifically for Muslims
 • DeenHub with Qur'an & adhkaar
 • Faith-aligned filtering
@@ -310,7 +310,7 @@ Why Choose AmnGaze Over Generic Content Blockers?
 16. FAQ QUICK ANSWERS
 ===========================================
 
-Q: Is AmnGaze free?
+Q: Is AmniHaze free?
 A: Yes! Completely free forever with no hidden costs or subscriptions.
 
 Q: Does it track my browsing?
@@ -339,9 +339,9 @@ A: Yes! Optional password lock prevents unauthorized changes.
 ===========================================
 
 contentSettings Permission Justification:
-AmnGaze uses the contentSettings permission to enforce Safe Search on search engines (Google, Bing, Yahoo, DuckDuckGo) as part of our faith-aligned protection features. This ensures users who enable Safe Search in settings have it consistently applied across all supported search engines, helping maintain a halal browsing environment. This is a core privacy and protection feature requested by Muslim families and students to prevent exposure to inappropriate content in search results.
+AmniHaze uses the contentSettings permission to enforce Safe Search on search engines (Google, Bing, Yahoo, DuckDuckGo) as part of our faith-aligned protection features. This ensures users who enable Safe Search in settings have it consistently applied across all supported search engines, helping maintain a halal browsing environment. This is a core privacy and protection feature requested by Muslim families and students to prevent exposure to inappropriate content in search results.
 
 alarms Permission Justification:
-AmnGaze uses the alarms permission to provide accurate Islamic prayer time notifications and reminders. The extension calculates and schedules alarms for the five daily prayers (Fajr, Dhuhr, Asr, Maghrib, Isha) based on the user's location and selected calculation method. These scheduled reminders help Muslims maintain their spiritual obligations throughout their browsing day. Additionally, alarms are used to refresh prayer time calculations daily and manage timed reminder features for adhkaar (Islamic supplications).
+AmniHaze uses the alarms permission to provide accurate Islamic prayer time notifications and reminders. The extension calculates and schedules alarms for the five daily prayers (Fajr, Dhuhr, Asr, Maghrib, Isha) based on the user's location and selected calculation method. These scheduled reminders help Muslims maintain their spiritual obligations throughout their browsing day. Additionally, alarms are used to refresh prayer time calculations daily and manage timed reminder features for adhkaar (Islamic supplications).
 
 ===========================================

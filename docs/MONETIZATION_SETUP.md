@@ -1,4 +1,4 @@
-# Monetization and Backend Setup Guide for AmnGaze
+# Monetization and Backend Setup Guide for AmniHaze
 
 To fully own the extension's ecosystem and payments, you need to replace the original developer's backend services with your own. 
 
@@ -12,16 +12,16 @@ The extension uses Google Sign-In for user accounts. The current Client ID belon
 
 ### Step-by-Step Setup:
 1. Go to the [Google Cloud Console](https://console.cloud.google.com/).
-2. Create a new Project named `AmnGaze`.
+2. Create a new Project named `AmniHaze`.
 3. Navigate to **APIs & Services** > **OAuth consent screen**.
    - Select **External** (unless you want it locked to a Google Workspace).
-   - Fill in app information (App name: `AmnGaze`, Support email, Developer contact).
+   - Fill in app information (App name: `AmniHaze`, Support email, Developer contact).
    - Under Scopes, add `.../auth/userinfo.email` and `.../auth/userinfo.profile`.
 4. Navigate to **APIs & Services** > **Credentials**.
 5. Click **Create Credentials** > **OAuth client ID**.
 6. Select **Chrome extension** as the Application type.
 7. Fill in:
-   - **Name**: `AmnGaze Extension`
+   - **Name**: `AmniHaze Extension`
    - **Item ID**: Your Chrome Web Store extension ID (you will get this when you upload the extension to the Chrome Web Store Dashboard).
 8. Copy the generated **Client ID**.
 9. Update `client_id` in your `manifest.json`:
@@ -43,7 +43,7 @@ The original codebase had integration with **Polar.sh** (which is built on Strip
 
 ### Option A: Using Polar.sh (Recommended - Easiest)
 1. Sign up at [Polar.sh](https://polar.sh/).
-2. Create a Store/Organization named `AmnGaze`.
+2. Create a Store/Organization named `AmniHaze`.
 3. Create your subscription products/tiers (e.g., Free, Pro Monthly, Pro Yearly).
 4. Get your Polar API key and store client credentials.
 

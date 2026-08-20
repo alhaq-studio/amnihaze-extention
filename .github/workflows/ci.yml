@@ -1,4 +1,4 @@
-name: Build & Release AmnGaze Extension
+name: Build & Release AmniHaze Extension
 
 on:
   push:
@@ -47,9 +47,9 @@ jobs:
         if: github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main')
         with:
           tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'v0.1.9' }}
-          name: AmnGaze Extension ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'v0.1.9' }}
+          name: AmniHaze Extension ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'v0.1.9' }}
           body: |
-            ## 👁️ AmnGaze Visual AI Content Protection Extension v0.1.9
+            ## 👁️ AmniHaze Visual AI Content Protection Extension v0.1.9
             - **Local Machine Learning**: Real-time TensorFlow Lite screen blur engine.
             - **Cross-Browser Package**: Chrome & Firefox extension builds.
           draft: false

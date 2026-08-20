@@ -1,11 +1,11 @@
-# Privacy Policy for AmnGaze Extension
+# Privacy Policy for AmniHaze Extension
 
 **Developer:** Al-Haq Studio  
 **Effective Date:** August 10, 2025
 
 ## Introduction
 
-AmnGaze is a browser extension developed by Al-Haq Studio (Alhaq.uk) for the Al-Haq Initiative (alhaq-initiative.org) to help Muslims maintain halal browsing habits. We are committed to protecting your privacy and ensuring your data is handled according to Islamic values and global privacy standards.
+AmniHaze is a browser extension developed by Al-Haq Studio (Alhaq.uk) for the Al-Haq Initiative (alhaq-initiative.org) to help Muslims maintain halal browsing habits. We are committed to protecting your privacy and ensuring your data is handled according to Islamic values and global privacy standards.
 
 ## What Information We Collect
 

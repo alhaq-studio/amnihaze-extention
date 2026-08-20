@@ -1,15 +1,15 @@
 PROPRIETARY MODEL LICENSE
 
-Copyright (c) 2024-2025 AmnGaze. All Rights Reserved.
+Copyright (c) 2024-2025 AmniHaze. All Rights Reserved.
 
 The machine learning models contained in this directory are proprietary
-and confidential assets of AmnGaze. These models are protected by
+and confidential assets of AmniHaze. These models are protected by
 intellectual property laws and international treaties.
 
 RESTRICTIONS:
 - No copying, redistribution, or modification of these models is permitted
 - No reverse engineering, decompilation, or extraction of model weights
-- No use of these models outside of the official AmnGaze extension
+- No use of these models outside of the official AmniHaze extension
 - No commercial or non-commercial use without explicit written permission
 
 LICENSING:

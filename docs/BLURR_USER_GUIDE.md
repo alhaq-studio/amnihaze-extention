@@ -1,4 +1,4 @@
-# AmnGaze Blurr Feature - Quick Start Guide
+# AmniHaze Blurr Feature - Quick Start Guide
 
 ## What is Content Blur?
 
@@ -10,14 +10,14 @@ The Content Blur feature automatically blurs potentially inappropriate images, v
 
 ### From Popup (Fastest)
 
-1. Click the AmnGaze icon in your browser toolbar
+1. Click the AmniHaze icon in your browser toolbar
 2. Look for "🔍 Content Blur" toggle
 3. Click the switch to turn blur ON or OFF
 4. Blur applies immediately to all open tabs
 
 ### From Settings (Full Control)
 
-1. Click the AmnGaze icon
+1. Click the AmniHaze icon
 2. Click "⚙️ Settings" button
 3. Scroll to "🔍 Content Blur Settings"
 4. Configure all options
@@ -191,7 +191,7 @@ Add domains you trust so blur never applies there:
 
 ```
 ┌─────────────────────────────────┐
-│  AmnGaze Popup               │
+│  AmniHaze Popup               │
 ├─────────────────────────────────┤
 │  Status:                         │
 │  ┌──────┬──────┬──────────┐    │
@@ -240,7 +240,7 @@ A: Yes, if you're signed into your browser account.
 
 ## Remember
 
-🛡️ **AmnGaze is here to help protect your digital well-being**
+🛡️ **AmniHaze is here to help protect your digital well-being**
 
 - Blur adds a visual barrier
 - Blocking prevents access
