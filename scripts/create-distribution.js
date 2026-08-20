@@ -51,12 +51,12 @@ function main() {
     fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
   }
 
-  zipDirectory(chromeCwsSrc, path.join(distDir, `amngaze-v${version}-Chrome.zip`));
-  zipDirectory(firefoxSrc, path.join(distDir, `amngaze-v${version}-Firefox.zip`));
+  zipDirectory(chromeCwsSrc, path.join(distDir, `amnihaze-v${version}-Chrome.zip`));
+  zipDirectory(firefoxSrc, path.join(distDir, `amnihaze-v${version}-Firefox.zip`));
 
   // Also build the source code package for Firefox store reviewer validation
   console.log("Creating source code distribution package...");
-  const sourceOut = path.join(distDir, `amngaze-v${version}-Source.zip`);
+  const sourceOut = path.join(distDir, `amnihaze-v${version}-Source.zip`);
   if (fs.existsSync(sourceOut)) {
     fs.rmSync(sourceOut, { force: true });
   }

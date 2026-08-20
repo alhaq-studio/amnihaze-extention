@@ -28,8 +28,8 @@
 4. **Output locations:**
    - Chrome build: `build/chrome/`
    - Firefox build: `build/firefox/`
-   - Chrome Zip: `dist/amngaze-v0.1.9-Chrome.zip`
-   - Firefox Zip: `dist/amngaze-v0.1.9-Firefox.zip`
+   - Chrome Zip: `dist/amnihaze-v0.2.0-Chrome.zip`
+   - Firefox Zip: `dist/amnihaze-v0.2.0-Firefox.zip`
 
 ## Build Process Details
 
