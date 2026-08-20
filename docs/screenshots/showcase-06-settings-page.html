@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-emerald">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AmniHaze - Settings</title>
+  <link rel="stylesheet" href="../../dist/options/options.css">
+  <link rel="stylesheet" href="../../dist/options/tour-guide.css">
+  <link rel="stylesheet" href="../../dist/options/popup-onboarding.css">
+  <link rel="stylesheet" href="../../dist/options/onboarding-wizard.css">
+  <style>
+    @font-face {
+      font-family: "Coolvetica";
+      src: url("../../src/assets/fonts/coolvetica.otf") format("opentype");
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: "Inter";
+      src: url("../../src/assets/fonts/inter.woff2") format("woff2");
+      font-weight: 100 900;
+      font-style: normal;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background-color: #090d16;
+      background-image: radial-gradient(circle at 50% -20%, rgba(16, 185, 129, 0.15) 0%, transparent 60%);
+      font-family: "Inter", system-ui, sans-serif;
+      color: #f1f5f9;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="options-main">
+    <header>
+      <div class="logo-container">
+        <div class="header-title-group">
+          <h1>AmniHaze Settings</h1>
+          <span class="header-status-dot" aria-hidden="true"></span>
+        </div>
+        <p class="header-subtitle">Halal-first AI vision protection & distraction blocker</p>
+      </div>
+      <div class="header-controls">
+        <button class="take-tour-btn" id="start-tour-header-btn" type="button">
+          <span>🌙</span>
+          <span>Take Tour</span>
+        </button>
+        <div class="language-dropdown-custom">
+          <button class="language-dropdown-trigger">
+            <img src="../../src/assets/flags/gb.svg" alt="" class="lang-flag" />
+            <span class="lang-text">English</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="tab-container">
+      <div class="tabs" role="tablist">
+        <button class="tab-button active" role="tab">Settings Lock & Hardening</button>
+      </div>
+      <div class="tab-content">
+        <div class="tab-pane active">
+          <!-- Password Protection Card -->
+          <div class="feature-card" id="password-protection-card">
+            <div class="feature-content">
+              <div class="feature-header">
+                <h3>Password Protection</h3>
+                <label class="switch">
+                  <input type="checkbox" id="password-protection-toggle" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <p class="feature-description">Require a password to change or disable protection settings.</p>
+            </div>
+          </div>
+
+          <!-- Uninstall Prevention Card -->
+          <div class="feature-card" id="uninstall-prevention-card">
+            <div class="feature-content">
+              <div class="feature-header">
+                <h3>Uninstall Prevention <span class="options-new-badge-inline">NEW</span></h3>
+                <label class="switch">
+                  <input type="checkbox" id="uninstall-prevention-toggle" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <p class="feature-description">Prevent AmniHaze from being uninstalled from this browser.</p>
+            </div>
+          </div>
+
+          <!-- Prevent Incognito Card -->
+          <div class="feature-card" id="prevent-incognito-guest-card">
+            <div class="feature-content">
+              <div class="feature-header">
+                <h3>Prevent Incognito + Guest Mode <span class="options-new-badge-inline">NEW</span></h3>
+                <label class="switch">
+                  <input type="checkbox" id="prevent-incognito-guest-toggle" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <p class="feature-description">Block Incognito and Guest mode to stop bypassing protection.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modern Support Footer -->
+    <footer class="support-footer">
+      <span>Support & Contact:</span>
+      <a href="https://amnshield.com" target="_blank" rel="noopener noreferrer">AmnShield Portal</a>
+      •
+      <a href="https://github.com/alhaq-studio/amngaze-extension" target="_blank" rel="noopener noreferrer">GitHub</a>
+      •
+      <a href="mailto:support@amnihaze.com">Email Support</a>
+    </footer>
+  </div>
+</body>
+</html>
