@@ -9,7 +9,8 @@ const testFiles = [
   "blocklist-loading.test.js",
   "social-blocking-logic.test.js",
   "scheduler.test.js",
-  "integration.test.js"
+  "integration.test.js",
+  "video-realtime-blur.test.js"
 ];
 
 for (const testFile of testFiles) {
