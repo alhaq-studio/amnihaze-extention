@@ -1,0 +1,1101 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>AmniHaze Extension</title>
+        <script async defer src="../../src/assets/github-button.js"></script>
+        <link rel="stylesheet" href="popup.css" />
+    
+<style>
+/* Hide auth and pro badging in popup */
+#auth-overlay, 
+#protection-off-reminder, 
+.pro-badge,
+.premium-badge {
+    display: none !important;
+}
+</style>
+</head>
+    <body>
+        <!-- Password Overlay -->
+        <div id="password-overlay" class="password-overlay hidden">
+            <div class="password-container">
+                <h2>
+                    <img
+                        src="../../src/assets/lock-icon.svg"
+                        alt="Lock"
+                        class="lock-icon"
+                    />
+                    Enter Password
+                </h2>
+                <p class="overlay-description">
+                    Settings are locked. Please enter your password to access
+                    them.
+                </p>
+                <input
+                    type="password"
+                    id="settings-password"
+                    placeholder="Enter password to access settings"
+                    class="password-input"
+                />
+                <div class="password-buttons">
+                    <button id="submit-password" class="button button-primary">
+                        Unlock
+                    </button>
+                    <button
+                        id="cancel-password"
+                        class="button button-secondary"
+                    >
+                        Cancel
+                    </button>
+                </div>
+                <div id="password-error" class="error-message hidden">
+                    Incorrect password
+                </div>
+                <div class="forgot-password-link">
+                    <button id="popup-forgot-password-btn" class="link-button">
+                        Forgot password?
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Authentication Overlay -->
+        <div id="auth-overlay" class="password-overlay hidden">
+            <div class="password-container">
+                <h2>
+                    <img
+                        src="../../src/assets/lock-icon.svg"
+                        alt="Lock"
+                        class="lock-icon"
+                    />
+                    <span id="auth-title">Sign In</span>
+                </h2>
+                <p class="overlay-description" id="auth-description">
+                    Sign in to access premium features
+                </p>
+
+                <!-- Sign in form -->
+                <div id="sign-in-form">
+                    <input
+                        type="email"
+                        id="auth-email"
+                        placeholder="Email"
+                        class="password-input"
+                    />
+                    <input
+                        type="password"
+                        id="auth-password"
+                        placeholder="Password"
+                        class="password-input"
+                    />
+                    <div class="password-buttons">
+                        <button id="submit-auth" class="button button-primary">
+                            Sign In
+                        </button>
+                        <button
+                            id="cancel-auth"
+                            class="button button-secondary"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                    <div class="sign-up-toggle">
+                        <span>Don't have an account?</span>
+                        <a href="#" id="toggle-sign-up">Sign Up</a>
+                    </div>
+                    <div class="forgot-password">
+                        <a href="#" id="forgot-password">Forgot password?</a>
+                    </div>
+                </div>
+
+                <!-- Sign up form -->
+                <div id="sign-up-form" class="hidden">
+                    <input
+                        type="email"
+                        id="signup-email"
+                        placeholder="Email"
+                        class="password-input"
+                    />
+                    <input
+                        type="password"
+                        id="signup-password"
+                        placeholder="Password (min 6 characters)"
+                        class="password-input"
+                    />
+                    <input
+                        type="password"
+                        id="signup-confirm-password"
+                        placeholder="Confirm Password"
+                        class="password-input"
+                    />
+                    <div class="password-buttons">
+                        <button
+                            id="submit-signup"
+                            class="button button-primary"
+                        >
+                            Sign Up
+                        </button>
+                        <button
+                            id="cancel-signup"
+                            class="button button-secondary"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                    <div class="sign-up-toggle">
+                        <span>Already have an account?</span>
+                        <a href="#" id="toggle-sign-in">Sign In</a>
+                    </div>
+                </div>
+
+                <!-- Reset password form -->
+                <div id="reset-password-form" class="hidden">
+                    <input
+                        type="email"
+                        id="reset-email"
+                        placeholder="Enter your account email"
+                        class="password-input"
+                    />
+                    <div class="password-buttons">
+                        <button id="submit-reset" class="button button-primary">
+                            Send Reset Link
+                        </button>
+                        <button
+                            id="cancel-reset"
+                            class="button button-secondary"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+
+                <div id="auth-error" class="error-message hidden">
+                    Invalid credentials
+                </div>
+                <div id="auth-success" class="success-message hidden">
+                    Success! Signed in.
+                </div>
+            </div>
+        </div>
+
+        <!-- Email Verification Overlay - Disabled as verification is no longer required -->
+        <!-- <div id="verify-overlay" class="password-overlay hidden">
+            <div class="password-container">
+                <h2>
+                    <img
+                        src="../../src/assets/lock-icon.svg"
+                        alt="Lock"
+                        class="lock-icon"
+                    />
+                    Verify Your Email
+                </h2>
+                <p class="overlay-description">
+                    We sent a verification link to
+                    <span id="verify-email-text"></span>.<br />
+                    Click the link, then press "I've verified" below.
+                </p>
+                <p class="verify-email-note">
+                    Note: Check your spam folder if you don't see the email.
+                </p>
+                <div class="password-buttons">
+                    <button id="verified-btn" class="button button-primary">
+                        I've verified
+                    </button>
+                    <button id="resend-btn" class="button button-secondary">
+                        Resend Email
+                    </button>
+                </div>
+                <div id="verify-message" class="success-message hidden"></div>
+            </div>
+        </div> -->
+
+        <div class="header">
+            <div class="header-left">
+                <h1>AmniHaze</h1>
+            </div>
+            <div class="header-right">
+                <div class="header-selectors">
+                    <select id="language" title="Language" class="select-pill">
+                        <option value="en">EN</option>
+                        <option value="ar">AR</option>
+                        <option value="tr">TR</option>
+                        <option value="ur">UR</option>
+                    </select>
+                    <select id="theme" title="Theme" class="select-pill">
+                        <option value="sunset">Sunset</option>
+                        <option value="emerald">Emerald</option>
+                        <option value="cosmic">Cosmic</option>
+                        <option value="dark">Dark</option>
+                        <option value="system">Auto</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="switch medium">
+                        <input name="status" type="checkbox" aria-label="Toggle Protection" title="Toggle Protection" />
+                        <span class="slider medium"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div id="protection-off-reminder" class="popup-reminder hidden">
+            <div class="popup-reminder-content">
+                <span
+                    id="protection-off-reminder-eyebrow"
+                    class="popup-reminder-eyebrow"
+                >
+                    Weak Moment Support
+                </span>
+                <h2
+                    id="protection-off-reminder-title"
+                    class="popup-reminder-title"
+                >
+                    Was this a weak moment?
+                </h2>
+                <p
+                    id="protection-off-reminder-description"
+                    class="popup-reminder-description"
+                >
+                    Password Protection can make it harder to turn protection
+                    off impulsively when you need more support.
+                </p>
+                <div class="popup-reminder-actions">
+                    <button
+                        id="protection-off-reminder-cta"
+                        class="button button-primary"
+                        type="button"
+                    >
+                        Set up Password Protection
+                    </button>
+                    <button
+                        id="protection-off-reminder-dismiss"
+                        class="link-button"
+                        type="button"
+                    >
+                        Not now
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="container" id="container">
+            <div class="mb-2 mt-2 ml-2">
+                <!-- <h2 id="settings">Settings</h2> -->
+                <!-- refresh to see changes -->
+                <div
+                    class="hidden refresh blue-text"
+                    id="refresh-message"
+                    style="text-align: center"
+                >
+                    Refresh the page to see changes.
+                </div>
+            </div>
+
+            <div class="card mt-2" id="whitelist-container">
+                <div class="row space-between">
+                    <div>
+                        <p id="whitelist-desc" class="fs-xs">
+                            Detection is
+                            <span id="whitelist-status-on" class="blue-text">
+                                On
+                            </span>
+                            <span
+                                id="whitelist-status-off"
+                                class="red-text hidden"
+                            >
+                                Off
+                            </span>
+                            for <span id="website-name">bing.com</span>
+                        </p>
+                    </div>
+                    <label class="switch small">
+                        <input
+                            name="whitelist"
+                            id="whitelist"
+                            type="checkbox"
+                            aria-label="Toggle Whitelist for current website"
+                            title="Toggle Whitelist"
+                        />
+                        <span class="slider small"></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Active Page Shield Alert -->
+            <div class="card mt-2 hidden" id="popup-tab-shield-alert" style="background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.3); padding: 10px 14px;">
+                <div class="row space-between" style="align-items: center;">
+                    <div>
+                        <span style="color: #fca5a5; font-size: 12px; font-weight: 600;" id="tabShieldActive">🚨 Page Shield Active</span>
+                        <p class="fs-xs text-muted" style="margin: 2px 0 0 0;" id="tabShieldActiveDesc">Explicit content was detected on this page.</p>
+                    </div>
+                    <button id="popup-btn-unshield-tab" class="button button-small button-danger" style="padding: 4px 10px; font-size: 11px; margin-left: 8px;">Unshield</button>
+                </div>
+            </div>
+
+            <!-- Full-Page Shield & Indecency Sensitivity Card -->
+            <div class="card mt-2" id="page-shield-card">
+                <div class="row space-between" style="align-items: center;">
+                    <div>
+                        <span class="fs-sm fw-bold" id="pageShieldTitle">🛡️ Full-Page Shield</span>
+                        <p class="fs-xs text-muted" style="margin: 2px 0 0 0;" id="pageShieldDesc">
+                            Blur entire page on indecency detection
+                        </p>
+                    </div>
+                    <label class="switch small">
+                        <input
+                            name="pageShieldEnabled"
+                            id="page-shield-enabled"
+                            type="checkbox"
+                            checked
+                            aria-label="Toggle Full-Page Shield"
+                            title="Toggle Full-Page Shield"
+                        />
+                        <span class="slider small"></span>
+                    </label>
+                </div>
+                <div class="row space-between mt-2" id="nudity-sensitivity-row" style="align-items: center; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px;">
+                    <span class="fs-xs" id="nuditySensitivityLabel">Nudity Sensitivity:</span>
+                    <select name="nuditySensitivity" id="nudity-sensitivity" class="select-small" style="padding: 3px 8px; font-size: 11px;">
+                        <option value="strict">Strict (High)</option>
+                        <option value="balanced" selected>Balanced</option>
+                        <option value="low">Low (Conservative)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="card mt-2">
+                <div class="slider-container">
+                    <!-- Effect mode toggle (inline) -->
+                    <div class="popup-effect-toggle">
+                        <button
+                            class="popup-effect-btn active"
+                            data-effect="blur"
+                            id="popup-effect-blur"
+                        >
+                            <span id="popupEffectBlur">Blur</span>
+                        </button>
+                        <button
+                            class="popup-effect-btn"
+                            data-effect="solid"
+                            id="popup-effect-solid"
+                        >
+                            <span id="popupEffectSolid">Solid</span>
+                        </button>
+                    </div>
+
+                    <!-- Blur options (inline, visible when blur active) -->
+                    <div id="popup-blur-options" class="popup-effect-panel">
+                        <input
+                            type="range"
+                            id="blur-amount"
+                            name="blurAmount"
+                            min="20"
+                            max="40"
+                            value="30"
+                            class="form-range"
+                            width="50px"
+                            aria-label="Blur Amount"
+                            title="Blur Amount"
+                        />
+                        <span id="blur-amount-value" class="effect-value"
+                            >30</span
+                        >
+                        <div class="vertical-separator"></div>
+                        <label class="form-checkbox-label" id="grayscale-label">
+                            <span id="grayscale">Grayscale:</span>
+                            <input
+                                type="checkbox"
+                                class="form-checkbox"
+                                name="gray"
+                                id="grayscale-checkbox"
+                            />
+                        </label>
+                    </div>
+
+                    <!-- Solid color options (inline, hidden when blur active) -->
+                    <div
+                        id="popup-solid-options"
+                        class="popup-effect-panel hidden"
+                    >
+                        <div class="color-presets">
+                            <button
+                                type="button"
+                                class="color-preset"
+                                data-color="#808080"
+                                title="Gray"
+                                style="background-color: #808080"
+                            ></button>
+                            <button
+                                type="button"
+                                class="color-preset"
+                                data-color="#000000"
+                                title="Black"
+                                style="background-color: #000000"
+                            ></button>
+                            <button
+                                type="button"
+                                class="color-preset"
+                                data-color="#FFFFFF"
+                                title="White"
+                                style="background-color: #ffffff"
+                            ></button>
+                            <button
+                                type="button"
+                                class="color-preset"
+                                data-color="#2c3e50"
+                                title="Navy"
+                                style="background-color: #2c3e50"
+                            ></button>
+                            <button
+                                type="button"
+                                class="color-preset"
+                                data-color="#1b4332"
+                                title="Forest"
+                                style="background-color: #1b4332"
+                            ></button>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+                <!-- <div class="row space-between mb-2 hidden"> // if you see this, you get to try I guess :)
+                    <span id="detectionModel" trans="model-label">Detection Model:</span>
+                    <select name="detectionModel" class="select-small">
+                        <option value="vZNq2WHrFm7b" trans="model-v11nclean2">vZNq2WHrFm7b</option>
+                        <option value="mcDNsuzfxMHy" trans="model-v11nclean2m">mcDNsuzfxMHy</option>
+                        <option value="uSmhjQtBQ35f" trans="model-v11nclean2s">uSmhjQtBQ35f</option>
+                    </select>
+                </div> -->
+                <!-- Developer Tools (collapsible) -->
+                <div class="card mt-2 hidden" id="dev-tools-card">
+                    <details id="dev-tools">
+                        <summary>Developer Tools</summary>
+                        <div class="dev-section">
+                            <h3 class="dev-title">Model Selection</h3>
+                            <div
+                                class="row space-between mb-2"
+                                id="model-selection"
+                            >
+                                <span id="detectionModel"
+                                    >Detection Model:</span
+                                >
+                                <select
+                                    name="detectionModel"
+                                    class="select-small"
+                                >
+                                    <option value="vZNq2WHrFm7b">
+                                        vZNq2WHrFm7b
+                                    </option>
+                                    <option value="mcDNsuzfxMHy">
+                                        mcDNsuzfxMHy
+                                    </option>
+                                    <option value="uSmhjQtBQ35f">
+                                        uSmhjQtBQ35f
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Infinite Scroll Utility -->
+                        <div class="dev-section">
+                            <h3 class="dev-title">Utility Functions</h3>
+                            <div class="row space-between mb-2">
+                                <span>Infinite Scroll:</span>
+                                <div
+                                    style="
+                                        display: flex;
+                                        gap: 8px;
+                                        align-items: center;
+                                    "
+                                >
+                                    <button
+                                        id="infinite-scroll-toggle"
+                                        class="button button-secondary"
+                                    >
+                                        Start Scroll
+                                    </button>
+                                    <input
+                                        type="number"
+                                        id="scroll-speed"
+                                        value="100"
+                                        min="1"
+                                        max="200"
+                                        style="width: 60px; padding: 4px"
+                                        title="Scroll speed (pixels per tick)"
+                                    />
+                                    <input
+                                        type="number"
+                                        id="scroll-delay"
+                                        value="1"
+                                        min="1"
+                                        max="500"
+                                        style="width: 60px; padding: 4px"
+                                        title="Scroll delay (ms between ticks)"
+                                    />
+                                </div>
+                            </div>
+                            <div
+                                class="row mb-2"
+                                style="font-size: 12px; color: #666"
+                            >
+                                <span
+                                    >Auto-scrolls the current page continuously
+                                    for testing purposes</span
+                                >
+                            </div>
+                        </div>
+
+                        <div class="dev-section">
+                            <h3 class="dev-title">Compare Mode</h3>
+                            <!-- Compare is controlled via Start/Stop below -->
+                            <div class="hint">
+                                A = Blue, B = Red, Match = Green
+                            </div>
+                            <div
+                                class="row space-between mb-2"
+                                id="compare-mode-models"
+                            >
+                                <span>Model A:</span>
+                                <select
+                                    name="compareModelA"
+                                    class="select-small"
+                                >
+                                    <option value="vZNq2WHrFm7b">
+                                        vZNq2WHrFm7b
+                                    </option>
+                                    <option value="mcDNsuzfxMHy">
+                                        mcDNsuzfxMHy
+                                    </option>
+                                    <option value="uSmhjQtBQ35f">
+                                        uSmhjQtBQ35f
+                                    </option>
+                                </select>
+                            </div>
+                            <div
+                                class="row space-between mb-2"
+                                id="compare-mode-models-b"
+                            >
+                                <span>Model B:</span>
+                                <select
+                                    name="compareModelB"
+                                    class="select-small"
+                                >
+                                    <option value="vZNq2WHrFm7b">
+                                        vZNq2WHrFm7b
+                                    </option>
+                                    <option value="mcDNsuzfxMHy">
+                                        mcDNsuzfxMHy
+                                    </option>
+                                    <option value="uSmhjQtBQ35f">
+                                        uSmhjQtBQ35f
+                                    </option>
+                                </select>
+                            </div>
+                            <div
+                                class="row space-between mb-2"
+                                id="compare-mode-iou"
+                            >
+                                <span>IoU threshold:</span>
+                                <input
+                                    type="number"
+                                    name="compareIoU"
+                                    class="select-small"
+                                    min="0"
+                                    max="1"
+                                    step="0.05"
+                                />
+                            </div>
+                            <div
+                                class="row space-between mb-2"
+                                id="compare-mode-softness"
+                            >
+                                <span>Softness:</span>
+                                <input
+                                    type="number"
+                                    name="compareSoftness"
+                                    class="select-small"
+                                    min="0"
+                                    max="1.0"
+                                    step="0.01"
+                                />
+                            </div>
+                            <div
+                                class="row space-between mb-2"
+                                id="compare-mode-overlay"
+                            >
+                                <span>Overlay:</span>
+                                <select
+                                    name="compareOverlay"
+                                    class="select-small"
+                                >
+                                    <option value="all">All boxes</option>
+                                    <option value="disagreements">
+                                        Disagreements only
+                                    </option>
+                                </select>
+                            </div>
+                            <div
+                                class="row space-between mb-2"
+                                id="compare-mode-confidence"
+                            >
+                                <label class="compare-confidence">
+                                    Model A confidence:
+                                    <input
+                                        type="number"
+                                        name="compareConfidenceA"
+                                        class="select-small"
+                                        min="0"
+                                        max="1"
+                                        step="0.01"
+                                        placeholder="auto"
+                                    />
+                                </label>
+                                <label class="compare-confidence">
+                                    Model B confidence:
+                                    <input
+                                        type="number"
+                                        name="compareConfidenceB"
+                                        class="select-small"
+                                        min="0"
+                                        max="1"
+                                        step="0.01"
+                                        placeholder="auto"
+                                    />
+                                </label>
+                            </div>
+                            <div
+                                class="row space-between mb-2"
+                                id="compare-mode-collect"
+                            >
+                                <label
+                                    style="
+                                        display: flex;
+                                        gap: 0.5rem;
+                                        align-items: center;
+                                    "
+                                >
+                                    <input
+                                        type="checkbox"
+                                        name="compareCollect"
+                                    />
+                                    Collect disagreements
+                                </label>
+                                <div style="display: flex; gap: 8px">
+                                    <button
+                                        id="compare-export-dis"
+                                        class="button button-secondary"
+                                    >
+                                        Export JSON
+                                    </button>
+                                    <button
+                                        id="compare-export-dis-html"
+                                        class="button button-secondary"
+                                    >
+                                        Export HTML
+                                    </button>
+                                </div>
+                            </div>
+                            <div
+                                class="row space-between mb-2"
+                                id="compare-mode-actions"
+                            >
+                                <button id="compare-start" class="button">
+                                    Start Compare
+                                </button>
+                                <button
+                                    id="compare-stop"
+                                    class="button button-secondary"
+                                >
+                                    Stop Compare
+                                </button>
+                                <button
+                                    id="compare-turbo"
+                                    class="button button-primary"
+                                    title="Visit all tabs, reload and apply infinite scroll"
+                                >
+                                    Turbo Mode
+                                </button>
+                                <button
+                                    id="compare-export"
+                                    class="button button-secondary"
+                                >
+                                    Export Summary
+                                </button>
+                            </div>
+                            <div
+                                class="row mb-2"
+                                id="compare-mode-status"
+                                style="font-size: 12px"
+                            >
+                                <span id="compare-status-text"
+                                    >Status: idle</span
+                                >
+                                <span
+                                    id="compare-stats"
+                                    style="margin-left: auto"
+                                    >Frames: 0 • Matched: 0 • A-only: 0 •
+                                    B-only: 0 • avgIoU: 0.00</span
+                                >
+                            </div>
+                            <div
+                                class="row mb-2"
+                                id="compare-mode-speed"
+                                style="font-size: 12px"
+                            >
+                                <span id="compare-speed"
+                                    >A: -- ms (-- fps) • B: -- ms (-- fps)</span
+                                >
+                            </div>
+                        </div>
+                    </details>
+                </div>
+                <div class="blur-mode-section" id="blur-mode-section">
+                    <div class="mb-0 mt-0">
+                        <div class="blur-mode-options">
+                            <label id="specificBlur"> Blur Mode: </label>
+                            <div style="display: flex; gap: 1rem">
+                                <label class="blur-mode-option">
+                                    <input
+                                        type="radio"
+                                        name="specificBlur"
+                                        value="true"
+                                    />
+                                    <img
+                                        src="../../src/assets/specific-blur.png"
+                                        alt="Specific Blur"
+                                    />
+                                    <div
+                                        class="blur-label"
+                                        id="specificBlur-radio-specific"
+                                    >
+                                        Specific Blur
+                                    </div>
+                                </label>
+                                <label class="blur-mode-option">
+                                    <input
+                                        type="radio"
+                                        name="specificBlur"
+                                        value="false"
+                                    />
+                                    <img
+                                        src="../../src/assets/whole-blur.png"
+                                        alt="Whole Blur"
+                                    />
+                                    <div
+                                        class="blur-label"
+                                        id="specificBlur-radio-whole"
+                                    >
+                                        Whole Blur
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <!-- strictness slider -->
+
+                    <div class="strictness-container">
+                        <label for="strictness" id="strictness">
+                            Strictness:
+                            <span id="strictness-value">30%</span>
+                        </label>
+                        <input
+                            type="range"
+                            id="strictness"
+                            name="strictness"
+                            min="0.1"
+                            max="1"
+                            value="0.5"
+                            step="0.1"
+                            class="form-range"
+                        />
+                    </div>
+
+                    <!-- score threshold input -->
+                    <div
+                        class="row space-between mb-2 hidden"
+                        id="scoreThreshold-container"
+                    >
+                        <label for="scoreThreshold" id="scoreThreshold-label">
+                            Score Threshold:
+                        </label>
+                        <input
+                            type="number"
+                            id="scoreThreshold"
+                            name="scoreThreshold"
+                            min="0.1"
+                            max="0.9"
+                            value="0.35"
+                            step="0.01"
+                            style="
+                                width: 80px;
+                                padding: 4px;
+                                border: 1px solid #ccc;
+                                border-radius: 4px;
+                            "
+                        />
+                    </div>
+                </div>
+
+                <hr />
+                <div class="faces-section" id="faces-section">
+                    <div class="row space-between mb-2">
+                        <label for="facesToBlur_detect">
+                            <span id="facesToBlur">Faces to Blur </span>
+                        </label>
+                        <div class="options-grid">
+                            <label class="form-checkbox-label">
+                                <input
+                                    type="checkbox"
+                                    class="form-checkbox"
+                                    name="blurMale"
+                                    value="male"
+                                />
+                                <span id="blurMale">Male</span>
+                            </label>
+                            <label class="form-checkbox-label">
+                                <input
+                                    type="checkbox"
+                                    class="form-checkbox"
+                                    name="blurFemale"
+                                    value="female"
+                                />
+                                <span id="blurFemale">Female</span>
+                            </label>
+                        </div>
+                    </div>
+                    <hr />
+                    <div
+                        class="row space-between mb-2 media-setting"
+                        id="mediaSetting"
+                    >
+                        <label>
+                            <span id="mediaToBlur">Media to Blur</span>
+                        </label>
+                        <div class="options-grid">
+                            <label class="form-checkbox-label">
+                                <input
+                                    type="checkbox"
+                                    class="form-checkbox"
+                                    name="blurImages"
+                                    value="images"
+                                />
+                                <span id="blurImages">Images</span>
+                            </label>
+                            <label class="form-checkbox-label">
+                                <input
+                                    type="checkbox"
+                                    class="form-checkbox"
+                                    name="blurVideos"
+                                    value="videos"
+                                />
+                                <span id="blurVideos">Videos</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <details>
+                    <summary class="" style="cursor: pointer">
+                        <span id="additionalSettings">Additional Settings</span>
+                    </summary>
+
+                    <!-- blurryStart mode setting toggle switch -->
+                    <div class="mb-2">
+                        <div class="row space-between">
+                            <label for="blurryStart-mode">
+                                <span id="blurryStart">
+                                    Blur media on load:
+                                </span>
+                                <!-- i icon tooltip -->
+                                <span class="tooltip">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        height="1em"
+                                        viewBox="0 0 512 512"
+                                    >
+                                        <path
+                                            fill="#2196f3"
+                                            d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"
+                                        />
+                                    </svg>
+                                    <span class="tooltiptext">
+                                        When enabled, all images and videos will
+                                        be blurred by default until detection
+                                        starts.
+                                    </span>
+                                </span>
+                            </label>
+                            <label class="switch small">
+                                <input name="blurryStartMode" type="checkbox" />
+                                <span class="slider small"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <hr />
+                    <div class="row space-between mb-2">
+                        <label>
+                            <span id="unblurOnHover">Unblur on hover</span>
+                        </label>
+                        <div class="options-grid">
+                            <label class="form-checkbox-label">
+                                <input
+                                    type="checkbox"
+                                    class="form-checkbox"
+                                    name="unblurImages"
+                                    value="images"
+                                />
+                                <span id="unblurImages">Images</span>
+                            </label>
+                            <label class="form-checkbox-label">
+                                <input
+                                    type="checkbox"
+                                    class="form-checkbox"
+                                    name="unblurVideos"
+                                    value="videos"
+                                />
+                                <span id="unblurVideos">Videos</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <hr class="mt-2 mb-2" />
+
+                    <div class="row space-between mb-2">
+                        <label for="hideVideoToggle">
+                            <span id="hideVideoToggle"
+                                >Hide video detection toggle</span
+                            >
+                        </label>
+                        <label class="switch small">
+                            <input name="hideVideoToggle" type="checkbox" />
+                            <span class="slider small"></span>
+                        </label>
+                    </div>
+                </details>
+            </div>
+            <div
+                class="card mt-2 premium-controls-card"
+                id="premium-controls-section"
+            >
+                <!-- Self & Parental Controls Card - Clickable -->
+                <div class="controls-content">
+                    <div style="display: flex; flex-direction: column">
+                        <div style="display: flex; align-items: center">
+                            <img
+                                src="../../src/assets/lock-icon.svg"
+                                alt="Lock"
+                                class="settings-icon"
+                            />
+                            <span id="selfParentalControls"
+                                >Self &amp; Parental Controls</span
+                            >
+                        </div>
+                        <span
+                            id="controlsDescription"
+                            class="controls-description"
+                            style="
+                                font-size: 12px;
+                                margin-top: 6px;
+                                margin-bottom: 0px;
+                                color: #5f6368;
+                            "
+                        >
+                            Password Lock, Companion Alerts, Uninstall
+                            Prevention & more
+                        </span>
+                    </div>
+                </div>
+                <span class="corner-badge pro-badge" id="newBadge">PRO</span>
+            </div>
+        </div>
+
+        <div class="footer">
+            <!-- 3 buttons/links 1- share 2- github 3- support -->
+
+            <div
+                class="row mb-2"
+                style="
+                    justify-content: space-between;
+                    gap: 1rem;
+                    align-items: center;
+                    padding-inline: 1rem;
+                "
+            >
+                <a
+                    class="github-button"
+                    href="https://github.com/alhaq-studio/amngaze-extension"
+                    data-size="large"
+                    aria-label="Star AmniHaze on GitHub"
+                    >Star</a
+                >
+
+                <div class="row" style="gap: 0.2rem">
+                    <a
+                        href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2FAmnGaze%2Fpbcoegikffnadpahojjhgdladmmddeji&amp;linkname=Download%20AmnGaze%20Extension"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Share on Facebook"
+                        title="Share on Facebook"
+                        ><img
+                            src="https://static.addtoany.com/buttons/facebook.svg"
+                            alt="Facebook"
+                            width="24"
+                            height="24"
+                            style="background-color: royalblue"
+                    /></a>
+                    <a
+                        href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2FAmnGaze%2Fpbcoegikffnadpahojjhgdladmmddeji&amp;linkname=Download%20AmnGaze%20Extension"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Share on X (Twitter)"
+                        title="Share on X (Twitter)"
+                        ><img
+                            src="https://static.addtoany.com/buttons/x.svg"
+                            alt="X (Twitter)"
+                            width="24"
+                            height="24"
+                            style="background-color: royalblue"
+                    /></a>
+                    <a
+                        href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2FAmnGaze%2Fpbcoegikffnadpahojjhgdladmmddeji&amp;linkname=Download%20AmnGaze%20Extension"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Share on Reddit"
+                        title="Share on Reddit"
+                        ><img
+                            src="https://static.addtoany.com/buttons/reddit.svg"
+                            alt="Reddit"
+                            width="24"
+                            height="24"
+                            style="background-color: royalblue"
+                    /></a>
+                </div>
+            </div>
+
+            <div class="feedback fs-xs">
+                <span> We love to hear your feedback through our </span>
+                <a
+                    href="https://forms.gle/mDDjh44MKRVemWX86"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-trans="form-label"
+                    >Form</a
+                >
+                or
+                <a
+                    href="mailto:support@amnshield.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-trans="email-label"
+                    >Email</a
+                >
+            </div>
+        </div>
+
+        <script type="module" src="translations.js"></script>
+        <script type="module" src="iframe-helper.js"></script>
+        <script type="module" src="popup.js"></script>
+    </body>
+</html>
