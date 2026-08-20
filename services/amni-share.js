@@ -18,7 +18,7 @@
   const DEFAULT_SHARE_DATA = {
     title: "AmniHaze (Amni Blur/Mask)",
     text: "Protect your gaze online with on-device AI real-time visual content moderation and smart blurring.",
-    url: "https://amnshield.com"
+    url: "https://amnishield.com"
   };
 
   /**

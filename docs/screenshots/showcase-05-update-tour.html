@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AmniHaze - New Features Added</title>
+  <link rel="stylesheet" href="../../dist/options/options.css">
+  <link rel="stylesheet" href="../../dist/options/tour-guide.css">
+  <link rel="stylesheet" href="../../dist/options/popup-onboarding.css">
+  <link rel="stylesheet" href="../../dist/options/onboarding-wizard.css">
+  <style>
+    @font-face {
+      font-family: "Coolvetica";
+      src: url("../../src/assets/fonts/coolvetica.otf") format("opentype");
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: "Inter";
+      src: url("../../src/assets/fonts/inter.woff2") format("woff2");
+      font-weight: 100 900;
+      font-style: normal;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #090d16 0%, #0f172a 50%, #111e38 100%);
+      font-family: "Inter", system-ui, sans-serif;
+      color: #f1f5f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Ambient emerald glow background */
+    body::before {
+      content: "";
+      position: absolute;
+      top: -20%;
+      left: 30%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .tour-wrapper {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 680px;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .tour-card {
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 42px 46px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 50px rgba(16, 185, 129, 0.08);
+      text-align: center;
+      position: relative;
+    }
+
+    .welcome-badge-icon {
+      width: 68px;
+      height: 68px;
+      border-radius: 20px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px auto;
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.2);
+    }
+
+    .welcome-badge-icon img {
+      width: 44px;
+      height: 44px;
+    }
+
+    .tour-title {
+      font-family: "Coolvetica", "Inter", system-ui, sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 12px 0;
+      letter-spacing: -0.02em;
+    }
+
+    .tour-description {
+      font-size: 15px;
+      color: #94a3b8;
+      margin: 0 0 32px 0;
+      line-height: 1.6;
+    }
+
+    .feature-cards-grid {
+      display: flex;
+      gap: 18px;
+      margin-bottom: 32px;
+      text-align: left;
+    }
+
+    .feature-card {
+      flex: 1;
+      background: rgba(30, 41, 59, 0.65);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 24px 20px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-3px);
+      background: rgba(30, 41, 59, 0.9);
+      border-color: rgba(16, 185, 129, 0.4);
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.15);
+    }
+
+    .feature-icon-wrapper {
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .feature-icon-wrapper img {
+      width: 34px;
+      height: 34px;
+    }
+
+    .feature-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #ffffff;
+      margin: 0 0 8px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-new {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .feature-card p {
+      font-size: 13.5px;
+      color: #94a3b8;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .tour-actions-row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .btn-action-primary {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #ffffff;
+      border: none;
+      padding: 13px 36px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(16, 185, 129, 0.4);
+      transition: all 0.2s ease;
+    }
+
+    .btn-action-primary:hover {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.55);
+    }
+
+    .btn-action-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: #e2e8f0;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 13px 36px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-action-secondary:hover {
+      background: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    /* Notification Pill */
+    .update-notification-toast {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      color: #ffffff;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 12px 22px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-radius: 14px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(16, 185, 129, 0.15);
+      font-size: 14.5px;
+      font-weight: 600;
+      z-index: 100;
+    }
+
+    .update-notification-toast .icon {
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Announcement Banner -->
+  <div class="android-announcement-banner">
+    <span class="banner-icon">📱</span>
+    <span class="banner-text">
+      <strong>NEW!</strong>
+      <span>AmniHaze is now available on Android! Tap to get the app.</span>
+    </span>
+    <span class="banner-arrow">→</span>
+  </div>
+
+  <div class="tour-wrapper">
+    <div class="tour-card">
+      <div class="welcome-badge-icon">
+        <img src="../../src/assets/amngaze-icon-128.png" alt="AmniHaze Shield" />
+      </div>
+      <h1 class="tour-title">New Features Added</h1>
+      <p class="tour-description">AmniHaze now includes hardening features to prevent bypassing protection.</p>
+
+      <div class="feature-cards-grid">
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <img src="../../src/assets/onboarding/prevent-uninstall.png" alt="Uninstall Prevention" />
+          </div>
+          <h3>Uninstall Prevention <span class="badge-new">NEW</span></h3>
+          <p>Prevent AmniHaze from being uninstalled from this browser.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <img src="../../src/assets/onboarding/prevent-incognito.png" alt="Prevent Incognito" />
+          </div>
+          <h3>Prevent Incognito + Guest <span class="badge-new">NEW</span></h3>
+          <p>Block Incognito and Guest mode to stop bypassing protection.</p>
+        </div>
+      </div>
+
+      <div class="tour-actions-row">
+        <button class="btn-action-primary">Show Me</button>
+        <button class="btn-action-secondary">Skip</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Update Toast -->
+  <div class="update-notification-toast">
+    <span class="icon">🚀</span>
+    <span>AmniHaze has been updated</span>
+  </div>
+
+</body>
+</html>
