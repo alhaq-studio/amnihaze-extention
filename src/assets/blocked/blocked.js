@@ -188,6 +188,21 @@ document.getElementById("confirmation-modal").addEventListener("click", (e) => {
 });
 
 const checkDNS = async function () {
+    try {
+        const urlParam = new URLSearchParams(window.location.search).get("url");
+        if (urlParam) {
+            const targetEl = document.getElementById("blocked-target-url");
+            if (targetEl) {
+                try {
+                    const parsed = new URL(urlParam);
+                    targetEl.textContent = parsed.hostname || urlParam;
+                } catch {
+                    targetEl.textContent = urlParam;
+                }
+            }
+        }
+    } catch (e) {}
+
     const url = new URLSearchParams(window.location.search).get("url");
     const response = await fetch(
         `https://dnsforfamily.com/api/checkHost?hostnames[]=${url}`

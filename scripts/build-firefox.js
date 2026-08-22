@@ -11,45 +11,17 @@ const includeDirs = [
   "assets",
   "css",
   "data",
-  "DeenTab",
   "dist",
-  "offscreen.html",
-  "offscreen.js",
   "images",
   "netRequestRules",
-  "scripts",
   "services",
   "src",
   "tfjs"
 ];
 
 const includeFiles = [
-  "background-v2.js",
   "background.html",
-  "amngaze-background.js",
-  "amngaze-content.js",
-  "block.html",
-  "constants.js",
-  "content.js",
-  "guide.html",
-  "guide.js",
-  "help.html",
-  "help.js",
-  "LICENSE",
-  "polyfill.js",
-  "popup.css",
-  "popup-ecosystem.js",
-  "popup.html",
-  "popup.js",
-  "privacy.html",
-  "privacy.js",
-  "settings.html",
-  "settings.js",
-  "timetable-editor.html",
-  "uninstall.html",
-  "uninstall.js",
-  "welcome.html",
-  "welcome.js"
+  "LICENSE"
 ];
 
 function resetDir(dir) {
@@ -62,7 +34,11 @@ function copyIfExists(relativePath) {
   if (!fs.existsSync(source)) return;
   const target = path.join(outDir, relativePath);
   fs.mkdirSync(path.dirname(target), { recursive: true });
-  fs.cpSync(source, target, { recursive: true, force: true, filter: (src) => !src.endsWith('.zip') });
+  fs.cpSync(source, target, {
+    recursive: true,
+    force: true,
+    filter: (src) => !src.endsWith('.zip') && !src.endsWith('.xpi') && !src.endsWith('.tar') && !src.endsWith('.tgz') && !src.includes('buymeacoffee.min.js')
+  });
 }
 
 resetDir(outDir);
@@ -90,7 +66,7 @@ if (fs.existsSync(chromeManifestPath)) {
   firefoxManifest.browser_specific_settings = {
     gecko: {
       id: "amngaze@alhaq.studio",
-      strict_min_version: "109.0",
+      strict_min_version: "140.0",
       data_collection_permissions: {
         required: ["none"]
       }
