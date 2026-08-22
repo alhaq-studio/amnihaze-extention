@@ -40,7 +40,6 @@
       "128": "src/assets/amngaze-icon-128.png"
    },
    "incognito": "split",
-   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAp5OhtiABBslQCzvFFlj/Q0wVKqHpx10+kZfouC7hmQkAHBV+eL0DxKdh5GRlX1vmaUibgr1icd118KlaKJrqduay1rsQuSciUEt4w7jrSoVnmagkVthux1YLjvf1QxnxG1VymF/hwfYCorRLmCbF1hftdsmD9tjckQPQ9k/YPna9Yb+WIxh3c87zu/pSFolUSsE6UD45LDulvmiCAlxmGRFjz9hqMc4ITklIE1mDpcrlyjn/n09hTHqZ6tXG1YxZP+JUZCGPRhuK/s/AI8laXekvPtTOkKlSmekUEWhfTEzE5Fxl4TWk2TLMA6izjLx/P3wEUjOt/Yx37EQpGE40jwIDAQAB",
    "manifest_version": 3,
    "minimum_chrome_version": "109",
    "name": "AmniHaze - AI Visual Blur & Mask",
@@ -67,7 +66,6 @@
          ],
          "resources": [
             "src/assets/*",
-            "src/modules/auth.js",
             "src/nsfwjs/*",
             "tfjs/*"
          ]
