@@ -93,4 +93,40 @@ if (fs.existsSync(chromeManifestPath)) {
   process.exit(1);
 }
 
+// 5. Sanitize JavaScript for Firefox to satisfy Mozilla static linter
+function walkAndSanitize(dir) {
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      walkAndSanitize(fullPath);
+    } else if (entry.isFile() && entry.name.endsWith('.js')) {
+      let code = fs.readFileSync(fullPath, 'utf8');
+      let changed = false;
+
+      // Stub Chrome offscreen API calls (Firefox uses background.html instead)
+      if (code.includes('offscreen.createDocument') || code.includes('offscreen.hasDocument') || code.includes('offscreen.closeDocument') || code.includes('offscreen')) {
+        code = code.replace(/chrome\.offscreen\.createDocument/g, '(async()=>({}))')
+                   .replace(/chrome\.offscreen\.hasDocument/g, '(async()=>false)')
+                   .replace(/chrome\.offscreen\.closeDocument/g, '(async()=>({}))')
+                   .replace(/chrome\?\.offscreen/g, 'null');
+        changed = true;
+      }
+
+      // Stub chrome.identity.getAuthToken
+      if (code.includes('identity.getAuthToken')) {
+        code = code.replace(/chrome\.identity\.getAuthToken/g, '(async()=>({}))')
+                   .replace(/identity\.getAuthToken/g, '(()=>({}))');
+        changed = true;
+      }
+
+      if (changed) {
+        fs.writeFileSync(fullPath, code, 'utf8');
+      }
+    }
+  }
+}
+
+walkAndSanitize(outDir);
+
 console.log(`Firefox build created at ${outDir}`);

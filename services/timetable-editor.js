@@ -158,17 +158,20 @@
       if (categories.length === 0) {
         cell.style.background = '#fff';
         cell.style.borderLeft = 'none';
-        cell.innerHTML = '';
+        cell.replaceChildren();
       } else {
         // Show gradient or stripes for multiple categories
         const color = CATEGORY_COLORS[categories[0]] || '#6b7280';
         cell.style.background = `linear-gradient(135deg, ${color}22 0%, ${color}11 100%)`;
         cell.style.borderLeft = `3px solid ${color}`;
 
-        // Show category badges
-        cell.innerHTML = categories.slice(0, 3).map(cat =>
-          `<span style="display:inline-block;width:6px;height:6px;background:${CATEGORY_COLORS[cat]};border-radius:50%;margin:2px;"></span>`
-        ).join('');
+        // Show category badges safely without innerHTML
+        cell.replaceChildren();
+        categories.slice(0, 3).forEach(cat => {
+          const badge = document.createElement('span');
+          badge.style.cssText = `display:inline-block;width:6px;height:6px;background:${CATEGORY_COLORS[cat] || '#6b7280'};border-radius:50%;margin:2px;`;
+          cell.appendChild(badge);
+        });
       }
     }
 
