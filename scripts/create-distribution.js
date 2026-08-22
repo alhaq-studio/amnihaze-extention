@@ -48,10 +48,12 @@ function main() {
   if (fs.existsSync(manifestPath)) {
     const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf-8"));
     delete manifest.key;
+    delete manifest.update_url;
     fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
   }
 
   zipDirectory(chromeCwsSrc, path.join(distDir, `amnihaze-v${version}-Chrome.zip`));
+  zipDirectory(chromeCwsSrc, path.join(distDir, `amnihaze-v${version}-Edge.zip`));
   zipDirectory(firefoxSrc, path.join(distDir, `amnihaze-v${version}-Firefox.zip`));
 
   // Also build the source code package for Firefox store reviewer validation
