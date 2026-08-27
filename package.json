@@ -1,6 +1,6 @@
 {
   "name": "amnihaze-extension",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "AmniHaze (Amni Blur/Mask) — Real-time AI visual content moderation, smart image blurring, and screen masking",
   "main": "background.js",
   "scripts": {

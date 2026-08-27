@@ -17,6 +17,7 @@ function run(scriptName) {
   }
 }
 
+run("sanitize-innerhtml.js");
 run("build-chrome.js");
 run("build-firefox.js");
 

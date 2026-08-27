@@ -259,7 +259,8 @@ function injectReportModal(tabId, srcUrl, pageUrl, originalSrc) {
             .amngaze-success-message h3 { color: #4caf50; margin: 0 0 8px; }
             `;
 
-            shadow.innerHTML = html;
+            const parsedModal = new DOMParser().parseFromString(html, "text/html");
+            shadow.append(...parsedModal.body.childNodes);
             shadow.prepend(style);
             document.body.appendChild(container);
 
@@ -312,12 +313,13 @@ function injectReportModal(tabId, srcUrl, pageUrl, originalSrc) {
                     }
 
                     await fetch(gFormUrl, { method: "POST", mode: "no-cors", body: formData });
-                    content.innerHTML = `
+                    const parsedSuccess = new DOMParser().parseFromString(`
                     <div class="amngaze-success-message">
                       <h3>Thank You!</h3>
                       <p>Your report has been submitted successfully.<br>We appreciate your help in improving AmniHaze.</p>
                     </div>
-                    `;
+                    `, "text/html");
+                    content.replaceChildren(...parsedSuccess.body.childNodes);
                     setTimeout(close, 2000);
                 } catch (err) {
                     console.error("Report failed:", err);
