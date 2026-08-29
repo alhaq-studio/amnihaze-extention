@@ -7,9 +7,9 @@
          "128": "src/assets/amngaze-icon-128.png"
       },
       "default_popup": "dist/popup/popup.html",
-      "default_title": "AmniHaze"
+      "default_title": "AmniBlur"
    },
-   "author": "Afrasyaab Meranai",
+   "author": "Habibur Rahman Meranai",
    "background": {
       "service_worker": "dist/background.js",
       "type": "module"
@@ -29,7 +29,7 @@
    "content_security_policy": {
       "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'; worker-src 'self';"
    },
-   "description": "AmniHaze (Amni Blur/Mask) — On-device real-time AI visual content moderation, image blurring, and privacy masking.",
+   "description": "AmniBlur — On-device real-time AI visual content moderation, image blurring, and privacy masking.",
    "host_permissions": [
       "<all_urls>"
    ],
@@ -42,7 +42,7 @@
    "incognito": "split",
    "manifest_version": 3,
    "minimum_chrome_version": "109",
-   "name": "AmniHaze - AI Visual Blur & Mask",
+   "name": "AmniBlur - AI Visual Blur & Mask",
    "options_ui": {
       "open_in_tab": true,
       "page": "dist/options/options.html"

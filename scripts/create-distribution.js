@@ -14,34 +14,32 @@ function zipDirectory(sourceDir, outPath) {
   if (fs.existsSync(outPath)) {
     fs.rmSync(outPath, { force: true });
   }
-  // Try tar first on all platforms (built into Windows 10/11, Linux, macOS).
-  // tar natively creates ZIP archives using standard POSIX forward slashes ('/').
-  let result = spawnSync("tar", ["-a", "-c", "-f", outPath, "-C", sourceDir, "."], { stdio: "inherit" });
-  if (result.status !== 0) {
-    if (process.platform === "win32") {
-      // Fallback: PowerShell System.IO.Compression with explicit forward-slash path normalization
-      const psScript = `
-        Add-Type -AssemblyName System.IO.Compression.FileSystem;
-        $zipPath = '${outPath.replace(/'/g, "''")}';
-        $srcDir = '${sourceDir.replace(/'/g, "''")}';
-        $zip = [System.IO.Compression.ZipFile]::Open($zipPath, [System.IO.Compression.ZipArchiveMode]::Create);
-        Get-ChildItem -Path $srcDir -Recurse | ForEach-Object {
-          if (-not $_.PSIsContainer) {
-            $relPath = $_.FullName.Substring($srcDir.Length + 1).Replace('\\', '/');
-            [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile($zip, $_.FullName, $relPath);
-          }
-        };
-        $zip.Dispose();
-      `;
-      result = spawnSync("powershell", ["-NoProfile", "-Command", psScript], { stdio: "inherit" });
-      if (result.status !== 0) {
-        throw new Error(`Failed to create archive: ${outPath}`);
-      }
-    } else {
-      result = spawnSync("zip", ["-r", outPath, "."], { cwd: sourceDir, stdio: "inherit" });
-      if (result.status !== 0) {
-        throw new Error(`Failed to create archive: ${outPath}`);
-      }
+  if (process.platform === "win32") {
+    const normalizedZipPath = path.resolve(outPath).replace(/'/g, "''");
+    const normalizedSrcDir = path.resolve(sourceDir).replace(/'/g, "''");
+    const psScript = `
+      Add-Type -AssemblyName System.IO.Compression;
+      Add-Type -AssemblyName System.IO.Compression.FileSystem;
+      $fileStream = [System.IO.File]::Open('${normalizedZipPath}', [System.IO.FileMode]::Create);
+      $zip = New-Object System.IO.Compression.ZipArchive($fileStream, [System.IO.Compression.ZipArchiveMode]::Create);
+      $src = (Get-Item '${normalizedSrcDir}').FullName;
+      Get-ChildItem -Path $src -Recurse | ForEach-Object {
+        if (-not $_.PSIsContainer) {
+          $relPath = $_.FullName.Substring($src.Length + 1).Replace('\\', '/');
+          [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile($zip, $_.FullName, $relPath, [System.IO.Compression.CompressionLevel]::Optimal) | Out-Null;
+        }
+      };
+      $zip.Dispose();
+      $fileStream.Dispose();
+    `;
+    const result = spawnSync("powershell", ["-NoProfile", "-Command", psScript], { stdio: "inherit" });
+    if (result.status !== 0) {
+      throw new Error(`Failed to create archive: ${outPath}`);
+    }
+  } else {
+    const result = spawnSync("zip", ["-r", outPath, "."], { cwd: sourceDir, stdio: "inherit" });
+    if (result.status !== 0) {
+      throw new Error(`Failed to create archive: ${outPath}`);
     }
   }
 }
