@@ -78,7 +78,7 @@ Distribution packages are generated in `dist/`:
 
 ---
 
-## 📄 License & Attribution
+## License & Attribution
 
-© 2026 Al-Haq Studio & Afrasyaab Meranai. Released under the MIT License.  
+© 2026 Al-Haq Studio & Habib Mukhlis. Released under the MIT License.  
 Part of the **Amn Ecosystem** (`AmnShield` & `AmnGaze`).
